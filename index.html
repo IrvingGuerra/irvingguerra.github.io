@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Irving Guerra</title>
+<style>
+  :root {
+    --fondo: #ffffff; --texto: #1a1c1a; --suave: #5a625c;
+    --acento: #00875a; --borde: #e3e8e4; --caja: #f5f8f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #101411; --texto: #e6ebe7; --suave: #a3ada6;
+      --acento: #5bd6a0; --borde: #27302a; --caja: #171d19;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 60px 16px 80px;
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--fondo); color: var(--texto);
+  }
+  main { max-width: 620px; margin: 0 auto; }
+  h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .sub { color: var(--suave); margin: 0 0 40px; }
+  h2 { font-size: 1.05rem; color: var(--acento); margin: 40px 0 14px; }
+  .app {
+    display: flex; align-items: center; gap: 14px;
+    background: var(--caja); border: 1px solid var(--borde);
+    border-radius: 14px; padding: 16px 18px; margin-bottom: 12px;
+    text-decoration: none; color: inherit;
+  }
+  .app:hover { border-color: var(--acento); }
+  .app .nombre { font-weight: 600; }
+  .app .desc { color: var(--suave); font-size: 0.9rem; }
+  footer {
+    margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--borde);
+    color: var(--suave); font-size: 0.88rem;
+  }
+</style>
+</head>
+<head>
+<body>
+<main>
+  <h1>Irving Guerra</h1>
+  <p class="sub">Desarrollo de aplicaciones móviles y web.</p>
+
+  <h2>Políticas de privacidad</h2>
+  <a class="app" href="./getmycurrency/privacidad.html">
+    <div>
+      <div class="nombre">Get My Currency</div>
+      <div class="desc">Convertidor de divisas para Android</div>
+    </div>
+  </a>
+
+  <footer>github.com/IrvingGuerra</footer>
+</main>
+</body>
+</html>
