@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Política de Privacidad · Duo Arena</title>
+<style>
+  :root {
+    --fondo: #ffffff; --texto: #1a1c1a; --suave: #5a625c;
+    --acento: #d6284a; --borde: #e3e8e4; --caja: #f5f8f6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --fondo: #101411; --texto: #e6ebe7; --suave: #a3ada6;
+      --acento: #ff7a93; --borde: #27302a; --caja: #171d19;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 16px 80px;
+    font: 17px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--fondo); color: var(--texto);
+  }
+  main { max-width: 680px; margin: 0 auto; }
+  h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 4px; letter-spacing: -0.02em; }
+  h2 {
+    font-size: 1.15rem; margin: 40px 0 10px; color: var(--acento);
+    letter-spacing: -0.01em;
+  }
+  .fecha { color: var(--suave); font-size: 0.92rem; margin: 0 0 32px; }
+  .destacado {
+    background: var(--caja); border: 1px solid var(--borde);
+    border-radius: 14px; padding: 18px 20px; margin: 28px 0;
+  }
+  .destacado p { margin: 0; }
+  ul { padding-left: 22px; }
+  li { margin: 7px 0; }
+  a { color: var(--acento); }
+  footer {
+    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--borde);
+    color: var(--suave); font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Política de Privacidad</h1>
+  <p class="fecha">Duo Arena · Actualizada el 23 de septiembre de 2026</p>
+
+  <div class="destacado">
+    <p><strong>En resumen:</strong> Duo Arena no pide registro, correo ni
+    teléfono, no muestra anuncios y no incluye herramientas de análisis. Para
+    poder jugar en línea solo usa un identificador anónimo, el apodo que tú
+    escribes y la posición de tu personaje durante la partida.</p>
+  </div>
+
+  <h2>Qué información se usa y para qué</h2>
+  <ul>
+    <li><strong>Identificador anónimo.</strong> Al crear o unirte a una sala, la
+    aplicación obtiene un identificador aleatorio de Firebase Authentication
+    (inicio de sesión anónimo). No está ligado a tu nombre, correo, teléfono ni
+    cuenta de Google. Sirve para que solo tú puedas mover a tu personaje.</li>
+    <li><strong>Apodo.</strong> El nombre que escribes en la pantalla principal
+    (opcional, máximo 12 caracteres) se guarda en la sala y lo ve el otro jugador
+    de esa sala. Te recomendamos no usar tu nombre completo ni datos personales.</li>
+    <li><strong>Datos de la partida.</strong> El código de la sala, si estás
+    conectado o no, y la posición y el estado de tu personaje mientras juegas. Se
+    envían en tiempo real para que el otro jugador vea tus movimientos.</li>
+  </ul>
+  <p>Esta información se usa <strong>únicamente para que el juego en línea
+  funcione</strong>. No se vende, no se usa para publicidad y no se comparte con
+  terceros con fines comerciales.</p>
+
+  <h2>Dónde se guarda</h2>
+  <p>Los datos de las salas se guardan en
+  <a href="https://firebase.google.com/" rel="noopener">Firebase Realtime Database</a>,
+  un servicio de Google, con conexión cifrada (HTTPS). Google actúa como
+  proveedor del servicio y, como ocurre con cualquier conexión a internet, puede
+  registrar datos técnicos como la dirección IP para operar y proteger el
+  servicio. Puedes consultar
+  <a href="https://firebase.google.com/support/privacy" rel="noopener">la
+  información de privacidad de Firebase</a>.</p>
+  <p>Solo pueden leer los datos de una sala los jugadores conectados al juego, y
+  cada jugador solo puede modificar los datos de su propio personaje.</p>
+
+  <h2>Cuánto tiempo se conserva</h2>
+  <p>Los datos de las salas se conservan en el servidor después de terminar la
+  partida. Si quieres que se eliminen los datos de una sala en la que jugaste,
+  escribe al correo de contacto indicando el código de la sala y se borrarán.</p>
+
+  <h2>Permisos</h2>
+  <p>La aplicación solicita un único permiso: <strong>acceso a internet</strong>,
+  necesario para jugar en línea. No accede a la cámara, el micrófono, la
+  ubicación, los contactos ni el almacenamiento.</p>
+
+  <h2>Publicidad y análisis</h2>
+  <p>La aplicación <strong>no muestra publicidad</strong>, no utiliza el
+  identificador de publicidad de Android (Advertising ID) ni incluye servicios
+  de análisis o seguimiento de comportamiento.</p>
+
+  <h2>Menores de edad</h2>
+  <p>La aplicación no está dirigida a menores de 13 años y no solicita de forma
+  intencional información personal de menores.</p>
+
+  <h2>Cambios en esta política</h2>
+  <p>Si esta política cambia, se publicará la versión actualizada en esta misma
+  dirección junto con su nueva fecha de actualización.</p>
+
+  <h2>Contacto</h2>
+  <p>Para dudas o solicitudes sobre tus datos, escribe a
+  <a href="mailto:guerravargasirving@gmail.com">guerravargasirving@gmail.com</a>.</p>
+
+  <footer>
+    Duo Arena · Desarrollada por Irving Guerra
+  </footer>
+</main>
+</body>
+</html>
