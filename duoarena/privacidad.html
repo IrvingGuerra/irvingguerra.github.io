@@ -67,6 +67,15 @@
     conectado o no, el personaje y los accesorios que elegiste, y la posición y
     el estado de tu personaje mientras juegas. Se envían en tiempo real para que
     el otro jugador vea tus movimientos.</li>
+    <li><strong>Conexión directa entre los dos jugadores.</strong> Para que el
+    juego responda más rápido, los dos dispositivos de una sala se conectan
+    directamente entre sí (tecnología WebRTC). Para lograrlo, cada dispositivo
+    comparte con el otro jugador de la sala las direcciones de red por las que
+    se le puede contactar (dirección IP local y pública); estas direcciones se
+    guardan en la sala junto con los demás datos de la partida. Para averiguar
+    su dirección pública, el dispositivo consulta un servidor STUN de Google; los
+    datos de la partida no pasan por ese servidor. Si la conexión directa no es
+    posible, la partida sigue a través de Firebase.</li>
     <li><strong>En tu celular.</strong> Tu apodo, tu personaje, tus accesorios y
     si prefieres jugar sin sonido o sin vibración se guardan solo en tu
     dispositivo, para recordarlos la próxima vez.</li>
