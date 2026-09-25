@@ -6,7 +6,7 @@ Sitio público de Irving en GitHub Pages (se publica solo al hacer push a `main`
   proyecto destacado (hoy solo **Duo Arena**, por decisión de Irving) y contacto
   (GitHub + guerravargasirving@gmail.com, elegido por él para ser público).
 - `duoarena/index.html` — página oficial de Duo Arena: presentación, botón
-  "Jugar en el navegador" (https://duo-arena-system.web.app) y "Próximamente en
+  "Jugar en el navegador" (https://duoarena.web.app) y "Próximamente en
   Google Play" (sigue en prueba interna), capturas en `duoarena/img/`, y la
   presentación de Isla Higuera (mundo, tipos, personajes). Sale de
   `duo-arena/sitio/isla-higuera.html` y de la biblia `duo-arena/docs/PERSONAJES.md`:
