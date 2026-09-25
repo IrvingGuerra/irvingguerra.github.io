@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Duo Arena · Juego de peleas para dos</title>
+<meta name="description" content="Duo Arena: peleas de plataformas estilo Smash para jugar en pareja, en línea. Conoce Isla Higuera y a Chispa, Zas, Tepe y Burbuja.">
+<meta property="og:title" content="Duo Arena">
+<meta property="og:description" content="Peleas de plataformas para dos, en línea. Conoce Isla Higuera y a sus personajes.">
+<meta property="og:image" content="https://irvingguerra.github.io/duoarena/img/home-run.jpg">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/icono.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800;900&display=swap">
+<style>
+  /* Un solo look a propósito: el cielo de Duo Arena (el juego no tiene modo oscuro). */
+  :root {
+    color-scheme: light;
+    --sky-top: #5EC4F0;
+    --sky-low: #BFEBFF;
+    --plum: #3D1A4F;
+    --plum-glass: rgba(61, 26, 79, 0.86);
+    --plum-soft: rgba(61, 26, 79, 0.55);
+    --sun: #FFD60A;
+    --coral: #FF4D6D;
+    --grass: #5DB35A;
+    --ink: #1B1B1E;
+    --text: #FFFFFF;
+    --muted: #E7D9F2;
+    --fuego: #FF6B35; --rayo: #FFC300; --roca: #9D4EDD;
+    --agua: #2EC4B6; --planta: #52B788; --viento: #A9DEF9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: linear-gradient(180deg, var(--sky-top) 0, var(--sky-low) 900px, #D8F3FF 100%);
+    background-color: var(--sky-low);
+    color: var(--text);
+    font: 600 16px/1.55 "Nunito", "Trebuchet MS", system-ui, sans-serif;
+    padding-inline: 16px;
+    padding-block: 0 48px;
+    overflow-x: hidden;
+  }
+  main { max-width: 1040px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+  h1, h2, h3 { font-family: "Lilita One", "Arial Rounded MT Bold", "Nunito", sans-serif; font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: 0.01em; }
+  p { margin: 0; }
+  .panel {
+    background: var(--plum-glass);
+    border-radius: 22px;
+    padding: 22px clamp(16px, 3vw, 30px);
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .eyebrow { font-weight: 900; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sun); }
+  h2 { font-size: clamp(28px, 4.2vw, 40px); text-shadow: 0 3px 0 rgba(0,0,0,.25); }
+  .lead { color: var(--muted); max-width: 64ch; }
+
+  /* --- Portada */
+  .hero { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding-top: 28px; }
+  .hero .kicker { font-weight: 900; letter-spacing: .16em; text-transform: uppercase; font-size: 13px; color: var(--plum); background: var(--sun); padding: 4px 12px; border-radius: 99px; }
+  .hero h1 {
+    font-size: clamp(54px, 11vw, 112px); line-height: .95; color: var(--coral);
+    -webkit-text-stroke: 3px #fff; paint-order: stroke fill;
+    text-shadow: 0 6px 0 var(--plum), 0 10px 18px rgba(61,26,79,.35);
+    transform: rotate(-2deg);
+  }
+  .hero p { color: var(--plum); font-weight: 800; max-width: 52ch; font-size: 17px; margin-top: 14px; }
+  .scene { width: 100%; max-width: 900px; }
+  .scene svg { width: 100%; height: auto; display: block; overflow: visible; }
+
+  /* --- Mapa */
+  .mapwrap { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: center; }
+  .map svg { width: 100%; height: auto; display: block; }
+  .regions { display: grid; gap: 10px; }
+  .region { display: grid; grid-template-columns: 38px 1fr; gap: 10px; align-items: start; }
+  .region .dot { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; font-size: 20px; }
+  .region b { font-weight: 900; }
+  .region small { color: var(--muted); display: block; font-size: 14px; }
+  .soon { font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--plum); background: var(--viento); border-radius: 99px; padding: 1px 7px; margin-left: 6px; }
+
+  /* --- Tipos */
+  .types { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .type { border-radius: 16px; padding: 14px; background: rgba(255,255,255,.08); border: 2px solid var(--c); display: flex; flex-direction: column; gap: 6px; }
+  .type h3 { font-size: 24px; color: var(--c); display: flex; align-items: center; gap: 8px; }
+  .type .row { font-size: 14px; color: var(--muted); }
+  .type .row b { color: var(--text); font-weight: 800; }
+  .cycle { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 20px; align-items: center; }
+  .cycle svg { width: 100%; height: auto; }
+  .rules { display: grid; gap: 8px; }
+  .rule { background: rgba(255,255,255,.08); border-radius: 12px; padding: 8px 12px; font-size: 15px; }
+  .rule b { font-weight: 900; }
+  .note { font-size: 14px; color: var(--muted); }
+
+  /* --- Personajes */
+  .cast { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .card { border-radius: 22px; overflow: hidden; background: var(--plum-glass); display: flex; flex-direction: column; }
+  .card .art { background: linear-gradient(180deg, var(--bg1), var(--bg2)); display: grid; grid-template-columns: 150px 1fr; align-items: end; gap: 12px; padding: 16px 18px 0; }
+  .card .art svg { width: 150px; height: 170px; display: block; }
+  .card .name { padding-bottom: 14px; }
+  .card .name h3 { font-size: 44px; line-height: 1; color: #fff; text-shadow: 0 4px 0 rgba(0,0,0,.28); }
+  .card .was { font-size: 13px; font-weight: 800; color: rgba(255,255,255,.85); }
+  .badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.92); color: var(--ink); border-radius: 99px; padding: 3px 11px; font-weight: 900; font-size: 13px; margin-top: 6px; }
+  .card .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .quote { font-family: "Lilita One", "Nunito", sans-serif; font-size: 22px; color: var(--sun); }
+  .facts { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 14.5px; }
+  .facts dt { color: var(--sun); font-weight: 900; font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; padding-top: 3px; }
+  .facts dd { margin: 0; color: var(--muted); }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .stat { font-size: 11px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; flex-direction: column; gap: 4px; }
+  .bars { display: flex; gap: 3px; }
+  .bars i { flex: 1; height: 7px; border-radius: 4px; background: rgba(255,255,255,.18); }
+  .bars i.on { background: var(--c); }
+
+  /* --- Relaciones y próximos */
+  .friends { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .friend { background: rgba(255,255,255,.08); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+  .pair { display: flex; align-items: flex-end; gap: 2px; }
+  .pair svg { width: 56px; height: 64px; }
+  .friend b { font-weight: 900; }
+  .friend p { font-size: 14px; color: var(--muted); }
+  .next { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .mini { background: rgba(255,255,255,.08); border-radius: 16px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; }
+  .mini svg { width: 84px; height: 96px; }
+  .mini h3 { font-size: 22px; }
+  .mini .tt { font-size: 13px; font-weight: 900; }
+  .mini p { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  .mini .lock { margin-top: auto;  font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--plum); background: var(--sun); border-radius: 99px; padding: 1px 8px; }
+  footer { text-align: center; color: var(--plum); font-weight: 800; font-size: 14px; }
+
+  @media (max-width: 820px) {
+    .mapwrap, .cycle { grid-template-columns: 1fr; }
+    .types { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cast { grid-template-columns: 1fr; }
+    .next { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .friends { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .types { grid-template-columns: 1fr; }
+    .next { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card .art { grid-template-columns: 110px 1fr; }
+    .card .art svg { width: 110px; height: 125px; }
+    .card .name h3 { font-size: 36px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .bob { animation: bob 3s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 100%; }
+    .bob.d1 { animation-delay: -.7s } .bob.d2 { animation-delay: -1.4s } .bob.d3 { animation-delay: -2.1s }
+    @keyframes bob { 0%,100% { transform: translateY(0) scaleY(1) } 50% { transform: translateY(-4px) scaleY(1.03) } }
+    .cloud { animation: drift 40s linear infinite; }
+    @keyframes drift { from { transform: translateX(-60px) } to { transform: translateX(60px) } }
+  }
+  body { margin: 0; }
+  a { color: inherit; }
+  .topbar { max-width: 1040px; margin: 0 auto; padding-top: 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .topbar a { text-decoration: none; font-weight: 900; color: var(--plum); background: rgba(255,255,255,.65); border-radius: 99px; padding: 6px 14px; font-size: 14px; }
+  .topbar a:hover, .topbar a:focus-visible { background: #fff; }
+  .cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 900; font-size: 18px; border-radius: 18px; padding: 12px 22px; }
+  .btn.play { background: var(--coral); color: #fff; box-shadow: 0 6px 0 #B8203F; }
+  .btn.play:hover, .btn.play:focus-visible { transform: translateY(2px); box-shadow: 0 4px 0 #B8203F; }
+  .btn.soon { background: rgba(61,26,79,.85); color: #fff; cursor: default; }
+  .btn.soon small { font-weight: 800; color: var(--sun); display: block; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  .features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+  .feat { background: rgba(255,255,255,.08); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 4px; }
+  .feat b { font-family: "Lilita One", "Nunito", sans-serif; font-weight: 400; font-size: 21px; color: var(--sun); }
+  .feat p { font-size: 14.5px; color: var(--muted); }
+  .shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .shots figure { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .shots img { width: 100%; height: auto; border-radius: 14px; display: block; border: 3px solid rgba(255,255,255,.15); }
+  .shots figcaption { font-size: 13.5px; color: var(--muted); font-weight: 800; }
+  .shots .wide { grid-column: 1 / -1; }
+  footer a { font-weight: 900; }
+  @media (max-width: 820px) { .features { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .features, .shots { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav class="topbar" aria-label="Sitio">
+  <a href="../">← Irving Guerra</a>
+  <a href="privacidad.html">Privacidad</a>
+</nav>
+
+<main>
+  <header class="hero">
+    <span class="kicker">Peleas de plataformas para dos</span>
+    <h1>Duo Arena</h1>
+    <p>Un juego estilo Smash, con alma de Mario, para jugar en pareja: cada quien en su celular, en la misma casa o cada quien en la suya. Pégale, sácalo del escenario y que gane el mejor.</p>
+    <div class="cta">
+      <a class="btn play" href="https://duo-arena-irving.web.app" target="_blank" rel="noopener">▶ Jugar en el navegador</a>
+      <span class="btn soon"><span><small>Próximamente</small>en Google Play</span></span>
+    </div>
+    <div class="scene" id="scene"></div>
+  </header>
+
+  <section class="panel" aria-labelledby="t-juego">
+    <span class="eyebrow">El juego</span>
+    <h2 id="t-juego">Todo lo que trae</h2>
+    <div class="features">
+      <div class="feat"><b>En línea, con código</b><p>Uno crea la sala, el otro escribe el código de 4 letras. Conexión directa entre los dos celulares: casi sin retraso.</p></div>
+      <div class="feat"><b>4 personajes con tipo</b><p>Chispa, Zas, Tepe y Burbuja: cada quien pelea distinto, tiene su especial y su tipo, como en Pokémon.</p></div>
+      <div class="feat"><b>Items estilo Smash</b><p>Bate de home run, estrella, corazón y hongo gigante que van apareciendo en el escenario.</p></div>
+      <div class="feat"><b>5 escenarios</b><p>Pradera, Castillo, Playa Litibú, Nubes y Volcán, con plataformas que se mueven y lava que rebota.</p></div>
+      <div class="feat"><b>Contra la compu</b><p>¿Solo? Juega contra la compu en Fácil, Normal o Difícil. Ella también agarra items.</p></div>
+      <div class="feat"><b>Hecho para el celular</b><p>Joystick que sale donde toques y un solo botón de golpe: la dirección decide el golpe.</p></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-fotos">
+    <span class="eyebrow">Capturas</span>
+    <h2 id="t-fotos">Así se ve</h2>
+    <div class="shots">
+      <figure class="wide"><img src="img/home-run.jpg" alt="Letrero ¡HOME RUN! después de un batazo en el Castillo" width="1280" height="720" loading="lazy"><figcaption>El bate de home run: un golpe y sales volando.</figcaption></figure>
+      <figure><img src="img/super-efectivo.jpg" alt="Letrero ¡Súper efectivo! cuando el relámpago de Zas le pega a Burbuja" width="1280" height="720" loading="lazy"><figcaption>Rayo contra Agua: ¡súper efectivo!</figcaption></figure>
+      <figure><img src="img/seleccion.jpg" alt="Pantalla de selección con Tepe, tipo Roca" width="1280" height="720" loading="lazy"><figcaption>Elige a tu personaje.</figcaption></figure>
+      <figure><img src="img/bate-en-linea.jpg" alt="Partida en línea con conexión directa; Burbuja trae el bate" width="1280" height="720" loading="lazy"><figcaption>En línea, cada quien en su celular.</figcaption></figure>
+      <figure><img src="img/menu.jpg" alt="Menú principal de Duo Arena" width="1280" height="720" loading="lazy"><figcaption>Crea una sala o únete con el código.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-isla">
+    <span class="eyebrow">El mundo</span>
+    <h2 id="t-isla">Isla Higuera</h2>
+    <p class="lead">Una islita alegre inspirada en Higuera Blanca, Nayarit. En el centro crece la gran Higuera Blanca. Aquí pelear es el deporte favorito: nadie sale lastimado, solo sale volando… y regresa.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="t-mapa">
+    <span class="eyebrow">Las regiones</span>
+    <h2 id="t-mapa">Cada escenario es una región</h2>
+    <p class="lead">Los escenarios del juego son lugares de la isla, y cada lugar es la casa de un tipo. En las carreras, las pistas recorrerán estas mismas regiones.</p>
+    <div class="mapwrap">
+      <div class="map" id="map"></div>
+      <div class="regions" id="regions"></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-tipos">
+    <span class="eyebrow">Los tipos</span>
+    <h2 id="t-tipos">Seis tipos, como en Pokémon</h2>
+    <p class="lead">El tipo decide cómo pelea un personaje, su especial, sus colores y cómo suena. Un personaje nuevo es un tipo (o dos) más su look, su nombre y su forma de ser.</p>
+    <div class="types" id="types"></div>
+    <div class="cycle">
+      <div id="cycle"></div>
+      <div class="rules">
+        <h3 style="font-size:26px">¿Quién le gana a quién?</h3>
+        <div id="rules" class="rules"></div>
+        <p class="note">Solo cuenta en los especiales: ×1.25 de daño y un letrero de "¡Súper efectivo!". Suave a propósito, para que en una pelea entre ustedes gane quien juegue mejor. Un personaje puede tener dos tipos (Fuego + Roca = magma).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-cast">
+    <span class="eyebrow">Los 4 iniciales</span>
+    <h2 id="t-cast">Conoce a la pandilla</h2>
+    <div class="cast" id="cast"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-amigos">
+    <span class="eyebrow">Entre ellos</span>
+    <h2 id="t-amigos">Amigos, rivales y cuidadores</h2>
+    <div class="friends" id="friends"></div>
+  </section>
+
+  <section class="panel" aria-labelledby="t-next">
+    <span class="eyebrow">Próximamente · modo historia</span>
+    <h2 id="t-next">Se desbloquean jugando</h2>
+    <p class="lead">En el modo historia eliges a uno de los 4 y recorres la isla ganándole a sus habitantes. Cada que le ganas a alguien nuevo, se une al equipo. Estos son los primeros candidatos (todavía sin hacer).</p>
+    <div class="next" id="next"></div>
+  </section>
+
+  <footer>Duo Arena · hecho por <a href="../">Irving Guerra</a> · <a href="privacidad.html">Política de privacidad</a></footer>
+</main>
+
+<script>
+(() => {
+  const TYPES = {
+    agua:   { n: 'Agua',   e: '💧', c: '#2EC4B6', region: 'Playa Litibú', estilo: 'Flota, cae despacito y se recupera de todo', esp: 'Atrapar y controlar (burbuja)', se: 'Turquesas, brillos y burbujitas', suena: '"Plop"' },
+    fuego:  { n: 'Fuego',  e: '🔥', c: '#FF6B35', region: 'Volcán', estilo: 'Equilibrado, bueno en todo', esp: 'Proyectil (bola de fuego)', se: 'Rojos y naranjas, chispitas que suben', suena: 'Chisporroteo' },
+    planta: { n: 'Planta', e: '🌿', c: '#52B788', region: 'Pradera', estilo: 'Alcance largo, peso medio', esp: 'Enredadera que jala', se: 'Verdes, hojitas y flores', suena: 'Crujir de hojas', nuevo: true },
+    roca:   { n: 'Roca',   e: '🪨', c: '#B07CE8', region: 'Castillo', estilo: 'Lento, pesado y pega durísimo', esp: 'Golpe cargado', se: 'Morados y grises, grietas, polvito al caer', suena: 'Golpes graves' },
+    viento: { n: 'Viento', e: '💨', c: '#A9DEF9', region: 'Cerro del Mono', estilo: 'Aéreo: planea y cambia de dirección en el aire', esp: 'Ráfaga que empuja lejos (poco daño, mucha salida)', se: 'Blancos y celestes, remolinos y listones', suena: 'Silbido', nuevo: true },
+    rayo:   { n: 'Rayo',   e: '⚡', c: '#FFC300', region: 'Nubes', estilo: 'Rapidísimo y ligero, muchos saltos', esp: 'Embestida que cruza la pantalla', se: 'Amarillos, picos y rayitas de velocidad', suena: 'Zumbido eléctrico' },
+  };
+  // Orden del ciclo: cada uno le gana al siguiente.
+  const CYCLE = ['agua', 'fuego', 'planta', 'roca', 'viento', 'rayo'];
+  const VERB = { agua: 'apaga', fuego: 'quema', planta: 'rompe', roca: 'frena', viento: 'se lleva', rayo: 'electrocuta' };
+  const WHY = {
+    agua: 'al Fuego', fuego: 'a la Planta', planta: 'la Roca con sus raíces',
+    roca: 'al Viento como muralla', viento: 'la tormenta de Rayo', rayo: 'al Agua',
+  };
+
+  // --- Dibujo de personajes: los mismos trazos que en el juego (CharacterArt).
+  const NS = 'http://www.w3.org/2000/svg';
+  function eyes(cx, y, dir = 1, blink = false, look = 2) {
+    let s = '';
+    for (const dx of [-7, 7]) {
+      const x = cx + dx;
+      s += blink
+        ? `<line x1="${x - 4.5}" y1="${y}" x2="${x + 4.5}" y2="${y}" stroke="#1B1B1E" stroke-width="2.6" stroke-linecap="round"/>`
+        : `<circle cx="${x}" cy="${y}" r="5.5" fill="#fff"/><circle cx="${x + dir * look}" cy="${y}" r="2.8" fill="#1B1B1E"/>`;
+    }
+    return s;
+  }
+  // Cada figura en su caja de 60×70 (pies en y=64).
+  const LOOKS = {
+    chispa(c = '#FF4D6D') {
+      const x = 12, y = 16, w = 36, h = 48;
+      return `
+        <path d="M30 4 C 24 10, 22 14, 26 18 C 23 15, 34 14, 33 18 C 38 13, 35 8, 30 4 Z" fill="#FFB627"/>
+        <path d="M30 9 C 27 13, 27 15, 29 17 C 29 15, 33 15, 32 17 C 34 14, 32 11, 30 9 Z" fill="#FFF3B0"/>
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${c}"/>
+        ${eyes(34, y + 14)}
+        <circle cx="${x + w - 3}" cy="${y + 30}" r="6" fill="#C9184A"/>`;
+    },
+    zas(c = '#FFD60A') {
+      const x = 14, y = 22, w = 32, h = 42;
+      return `
+        <path d="M${x + 4} ${y + 8} L${x + 7} ${y - 9} L${x + 13} ${y + 4} L${x + 18} ${y - 12} L${x + 23} ${y + 4} L${x + 29} ${y - 7} L${x + 28} ${y + 8} Z" fill="#FFA41B"/>
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="12" fill="${c}"/>
+        ${eyes(34, y + 13)}
+        <path d="M${x - 6} ${y + 18} l6 -3 -2 5 5 -2" stroke="#FFF3B0" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+    },
+    tepe(c = '#9D4EDD') {
+      const x = 8, y = 10, w = 44, h = 54;
+      return `
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="7" fill="${c}"/>
+        <line x1="${x + 6}" y1="${y + h - 14}" x2="${x + 12}" y2="${y + h - 8}" stroke="#6A2C99" stroke-width="2" stroke-linecap="round"/>
+        <line x1="${x + w - 8}" y1="${y + 30}" x2="${x + w - 14}" y2="${y + 34}" stroke="#6A2C99" stroke-width="2" stroke-linecap="round"/>
+        <line x1="31" y1="${y + 8}" x2="41" y2="${y + 10}" stroke="#1B1B1E" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="17" y1="${y + 7}" x2="27" y2="${y + 9}" stroke="#1B1B1E" stroke-width="3.4" stroke-linecap="round"/>
+        ${eyes(34, y + 16)}
+        <line x1="${x + w + 2}" y1="${y + 34}" x2="${x + w + 2}" y2="${y + 18}" stroke="#52B788" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="${x + w + 2}" cy="${y + 15}" r="4" fill="#FF8FAB"/><circle cx="${x + w + 2}" cy="${y + 15}" r="1.8" fill="#FFC300"/>
+        <circle cx="${x + w - 2}" cy="${y + 34}" r="6" fill="#6A2C99"/>`;
+    },
+    burbuja(c = '#2EC4B6') {
+      const x = 11, y = 18, w = 38, h = 46;
+      return `
+        <line x1="30" y1="${y + 2}" x2="34" y2="${y - 10}" stroke="#23958B" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="35" cy="${y - 12}" r="4.5" fill="#fff"/><circle cx="35" cy="${y - 12}" r="7.5" fill="#fff" opacity=".25"/>
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="18" fill="${c}"/>
+        <circle cx="${x + 11}" cy="${y + 9}" r="3.8" fill="#fff" opacity=".55"/>
+        ${eyes(34, y + 14)}`;
+    },
+    brote(c = '#52B788') {
+      const x = 16, y = 26, w = 28, h = 38;
+      return `
+        <path d="M30 ${y} C 26 ${y - 10}, 18 ${y - 12}, 16 ${y - 6} C 22 ${y - 4}, 26 ${y - 4}, 30 ${y}" fill="#95D5B2"/>
+        <path d="M30 ${y} C 33 ${y - 12}, 42 ${y - 14}, 45 ${y - 8} C 40 ${y - 5}, 34 ${y - 4}, 30 ${y}" fill="#74C69D"/>
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="13" fill="${c}"/>
+        ${eyes(31, y + 13, 1, false, 1.5)}`;
+    },
+    magma(c = '#C1440E') {
+      const x = 6, y = 8, w = 48, h = 56;
+      return `
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="9" fill="${c}"/>
+        <path d="M${x + 8} ${y + h - 16} l6 -6 5 5 6 -8" stroke="#FFB627" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M${x + w - 10} ${y + 26} l-5 5" stroke="#FFB627" stroke-width="3" stroke-linecap="round"/>
+        <line x1="17" y1="${y + 8}" x2="27" y2="${y + 11}" stroke="#1B1B1E" stroke-width="3.4" stroke-linecap="round"/>
+        <line x1="33" y1="${y + 11}" x2="43" y2="${y + 8}" stroke="#1B1B1E" stroke-width="3.4" stroke-linecap="round"/>
+        ${eyes(30, y + 17, 1, false, 1)}`;
+    },
+    nube(c = '#DDE7F5') {
+      const y = 22;
+      return `
+        <g fill="${c}"><circle cx="20" cy="${y + 20}" r="12"/><circle cx="32" cy="${y + 12}" r="15"/><circle cx="43" cy="${y + 21}" r="11"/><rect x="12" y="${y + 18}" width="38" height="16" rx="8"/></g>
+        <path d="M22 ${y + 38} l-3 6 M31 ${y + 38} l-3 6 M40 ${y + 38} l-3 6" stroke="#4CC9F0" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M44 ${y + 30} l4 -3 -1 5 4 -2" stroke="#FFC300" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <line x1="24" y1="${y + 12}" x2="30" y2="${y + 14}" stroke="#1B1B1E" stroke-width="2.6" stroke-linecap="round"/>
+        <line x1="36" y1="${y + 14}" x2="42" y2="${y + 12}" stroke="#1B1B1E" stroke-width="2.6" stroke-linecap="round"/>
+        ${eyes(33, y + 19, -1, false, 1)}`;
+    },
+    coco(c = '#8D5A3B') {
+      const y = 22;
+      return `
+        <path d="M30 ${y} c-4 -12 -14 -14 -18 -10 c8 0 12 4 18 10 c4 -8 14 -12 20 -8 c-8 1 -14 4 -20 8" fill="#52B788"/>
+        <ellipse cx="30" cy="${y + 22}" rx="19" ry="21" fill="${c}"/>
+        <ellipse cx="23" cy="${y + 12}" rx="4" ry="2.5" fill="#fff" opacity=".25"/>
+        ${eyes(30, y + 20, 1, true)}
+        <path d="M25 ${y + 30} q5 4 10 0" stroke="#1B1B1E" stroke-width="2.4" fill="none" stroke-linecap="round"/>`;
+    },
+    rafa(c = '#DDF1FB') {
+      const x = 12, y = 20, w = 32, h = 38;
+      return `
+        <path d="M4 60 q8 -4 16 0 M40 62 q8 -4 16 0 M16 66 q10 -3 20 0" stroke="#8ECAE6" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+        <path d="M31 ${y + 2} C 30 ${y - 8}, 40 ${y - 12}, 42 ${y - 5} C 43 ${y}, 36 ${y + 1}, 36 ${y - 4}" stroke="#BDE3F5" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <rect x="${x}" y="${y}" width="${w}" height="${h}" rx="16" fill="${c}"/>
+        <path d="M${x + 16} ${y + 33} c-3 0 -4 -4 -1 -4.5 c4 -0.5 4.5 5 0 5.5 c-5 0.5 -6 -7 0 -7.5" stroke="#8ECAE6" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M${x - 1} ${y + 19} q17 5 34 0 v6 q-17 5 -34 0 Z" fill="#FF4D6D"/>
+        <path d="M${x + w - 2} ${y + 21} q8 -2 12 -8 q0 6 -4 8.5 q5 1 7 -2.5 q-2 8 -15 8 Z" fill="#FF4D6D"/>
+        <path d="M${x - 1} ${y + 22} q17 5 34 0" stroke="#FFD60A" stroke-width="1.6" fill="none"/>
+        <circle cx="${x + 5}" cy="${y + 9}" r="3" fill="#fff" opacity=".7"/>
+        ${eyes(30, y + 11, 1, false, 2.2)}`;
+    },
+  };
+  const figure = (key, cls = '', extra = '') =>
+    `<svg viewBox="0 0 60 70" role="img" aria-label="${key}" class="${cls}">${extra}<ellipse cx="30" cy="66" rx="20" ry="3.5" fill="#000" opacity=".18"/><g class="bob ${cls}">${LOOKS[key]()}</g></svg>`;
+
+  // --- Portada: la isla flotando con los cuatro encima.
+  const scene = document.getElementById('scene');
+  const heroCast = [['chispa', 250], ['zas', 360], ['tepe', 470], ['burbuja', 585]];
+  scene.innerHTML = `
+    <svg viewBox="0 0 900 380" role="img" aria-label="Chispa, Zas, Tepe y Burbuja sobre la isla">
+      <g class="cloud" opacity=".9"><g fill="#fff"><circle cx="90" cy="70" r="26"/><circle cx="122" cy="58" r="32"/><circle cx="158" cy="74" r="24"/><rect x="70" y="70" width="110" height="26" rx="13"/></g></g>
+      <g class="cloud" opacity=".8" style="animation-duration:55s"><g fill="#fff"><circle cx="740" cy="52" r="22"/><circle cx="770" cy="40" r="28"/><circle cx="800" cy="54" r="20"/><rect x="722" y="52" width="96" height="22" rx="11"/></g></g>
+      <circle cx="815" cy="120" r="44" fill="#FFE66D"/><circle cx="815" cy="120" r="62" fill="#FFE66D" opacity=".25"/>
+      <path d="M140 250 Q450 225 760 250 L700 290 Q450 380 200 290 Z" fill="#8D5A3B"/>
+      <path d="M200 290 Q450 380 700 290 L610 330 Q450 390 290 330 Z" fill="#6D4128"/>
+      <path d="M140 250 Q450 222 760 250 Q450 268 140 250 Z" fill="#6BBF59"/>
+      <rect x="140" y="243" width="620" height="12" rx="6" fill="#5DB35A"/>
+      ${[180, 240, 320, 420, 520, 610, 690].map((x, i) => `<circle cx="${x}" cy="${247 - (i % 2) * 2}" r="3.6" fill="${i % 2 ? '#FFD60A' : '#FF8FAB'}"/>`).join('')}
+      <g transform="translate(655 150)"><path d="M18 100 Q14 50 26 0" stroke="#8D5A3B" stroke-width="8" fill="none" stroke-linecap="round"/><g fill="#52B788"><path d="M26 0 q-30 -6 -46 14 q24 -6 46 -14"/><path d="M26 0 q30 -8 46 12 q-24 -4 -46 -12"/><path d="M26 0 q-8 -24 -30 -26 q18 10 30 26"/><path d="M26 0 q12 -22 34 -20 q-20 6 -34 20"/></g></g>
+      ${heroCast.map(([k, x], i) => `<g transform="translate(${x} 86) scale(2.6)"><ellipse cx="30" cy="64.5" rx="18" ry="3" fill="#000" opacity=".16"/><g class="bob d${i}">${LOOKS[k]()}</g></g>`).join('')}
+    </svg>`;
+
+  // --- Mapa estilizado de la isla.
+  const REGIONS = [
+    { k: 'volcan', t: 'fuego', name: 'Volcán', note: 'Rocas calientitas y lava que rebota (sin lastimar mucho)', x: 150, y: 110 },
+    { k: 'nubes', t: 'rayo', name: 'Nubes', note: 'Nubes arcoíris con tormentitas; se llega por los aires', x: 330, y: 55 },
+    { k: 'castillo', t: 'roca', name: 'Castillo', note: 'Castillo viejo de piedra; de ahí salió Tepe', x: 410, y: 150 },
+    { k: 'pradera', t: 'planta', name: 'Pradera', note: 'El centro de la isla, a la sombra de la gran Higuera Blanca: aquí todos se juntan a pelear', x: 250, y: 200 },
+    { k: 'playa', t: 'agua', name: 'Playa Litibú', note: 'La playa de Higuera Blanca: arena, palmera, balsa y el mar más azul', x: 330, y: 285 },
+    { k: 'cerro', t: 'viento', name: 'Cerro del Mono', note: 'El cerro para subir, con miradores; arriba el viento nunca para', x: 110, y: 250, soon: true },
+  ];
+  document.getElementById('map').innerHTML = `
+    <svg viewBox="0 0 520 360" role="img" aria-label="Mapa de Isla Higuera">
+      <rect width="520" height="360" rx="22" fill="#4CC9F0"/>
+      ${[40, 110, 300, 340].map((y, i) => `<path d="M${20 + i * 30} ${y} q12 -6 24 0 t24 0" stroke="#fff" stroke-width="2" fill="none" opacity=".45"/>`).join('')}
+      <path d="M70 150 C 60 80, 150 60, 230 90 C 300 40, 420 70, 460 140 C 500 210, 440 300, 340 305 C 280 330, 200 320, 150 290 C 80 280, 40 220, 70 150 Z" fill="#F4E3B5"/>
+      <path d="M90 155 C 85 100, 160 85, 230 110 C 300 70, 405 95, 435 150 C 460 210, 410 275, 335 280 C 280 300, 210 290, 165 268 C 105 258, 75 210, 90 155 Z" fill="#7CC46A"/>
+      <path d="M110 150 L150 70 L190 150 Z" fill="#5A3E36"/><path d="M140 88 L150 70 L160 88 Q150 95 140 88 Z" fill="#FF7B00"/>
+      <circle cx="160" cy="58" r="8" fill="#9aa" opacity=".6"/><circle cx="170" cy="44" r="10" fill="#9aa" opacity=".45"/>
+      <g fill="#fff"><circle cx="315" cy="42" r="12"/><circle cx="332" cy="34" r="15"/><circle cx="350" cy="42" r="11"/><rect x="303" y="40" width="58" height="12" rx="6"/></g>
+      <path d="M336 52 l-5 9 h6 l-4 9" stroke="#FFC300" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <g transform="translate(395 118)"><rect x="0" y="16" width="42" height="30" fill="#9D8FB0"/><rect x="-6" y="4" width="14" height="42" fill="#8A7AA3"/><rect x="34" y="4" width="14" height="42" fill="#8A7AA3"/><path d="M-8 4 L1 -10 L10 4 Z M32 4 L41 -10 L50 4 Z" fill="#5C4A7A"/><rect x="16" y="30" width="10" height="16" rx="5" fill="#3D1A4F"/></g>
+      <g transform="translate(285 262)"><path d="M6 40 Q2 20 10 0" stroke="#8D5A3B" stroke-width="4" fill="none"/><path d="M10 0 q-14 -4 -22 6 q12 -3 22 -6 M10 0 q14 -4 22 6 q-12 -3 -22 -6" fill="#2D9A5B"/></g>
+      <path d="M70 262 Q110 170 150 262 Z" fill="#4E9A45"/><g transform="translate(0 22)"><path d="M104 196 h12 v-10 h-12 Z M102 186 l8 -7 8 7 Z" fill="#8D5A3B"/></g>
+      <line x1="118" y1="212" x2="140" y2="182" stroke="#fff" stroke-width="1"/><path d="M140 172 l10 6 -10 6 -10 -6 Z" fill="#FF4D6D"/><path d="M140 184 q-4 10 4 18" stroke="#FFD60A" stroke-width="2" fill="none"/>
+      <g transform="translate(250 150)"><rect x="-4" y="10" width="8" height="26" rx="3" fill="#E9E1D3"/><path d="M0 22 q-12 -6 -16 -14 M0 18 q12 -4 16 -12" stroke="#E9E1D3" stroke-width="4" fill="none" stroke-linecap="round"/><g fill="#2D6A4F"><circle cx="-16" cy="-2" r="16"/><circle cx="14" cy="-4" r="17"/><circle cx="0" cy="-16" r="18"/></g><g fill="#7B2CBF"><circle cx="-10" cy="-4" r="2.6"/><circle cx="8" cy="-12" r="2.6"/><circle cx="18" cy="2" r="2.6"/></g></g>
+      ${REGIONS.map(r => `<g transform="translate(${r.x} ${r.y})"><circle r="15" fill="${TYPES[r.t].c}" stroke="#fff" stroke-width="3"/><text y="5" text-anchor="middle" font-size="15">${TYPES[r.t].e}</text><rect x="-${r.name.length * 3.9 + 8}" y="17" width="${r.name.length * 7.8 + 16}" height="19" rx="9.5" fill="#3D1A4F"/><text y="31" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="12" fill="#fff">${r.name}</text></g>`).join('')}
+    </svg>`;
+  document.getElementById('regions').innerHTML = REGIONS.map(r => `
+    <div class="region"><div class="dot" style="background:${TYPES[r.t].c}">${TYPES[r.t].e}</div>
+      <div><b>${r.name}</b> · tipo ${TYPES[r.t].n}${r.soon ? '<span class="soon">escenario nuevo</span>' : ''}<small>${r.note}</small></div></div>`).join('');
+
+  // --- Tipos.
+  document.getElementById('types').innerHTML = CYCLE.map(k => {
+    const t = TYPES[k];
+    return `<article class="type" style="--c:${t.c}">
+      <h3>${t.e} ${t.n}${t.nuevo ? '<span class="soon">nuevo</span>' : ''}</h3>
+      <p class="row"><b>Pelea:</b> ${t.estilo}</p>
+      <p class="row"><b>Especial:</b> ${t.esp}</p>
+      <p class="row"><b>Se ve:</b> ${t.se}</p>
+      <p class="row"><b>Suena:</b> ${t.suena} · <b>Vive en:</b> ${t.region}</p>
+    </article>`;
+  }).join('');
+
+  // Ciclo en hexágono: flecha de cada tipo al que le gana.
+  const R = 120, C = 170;
+  const pos = CYCLE.map((k, i) => {
+    const a = -Math.PI / 2 + i * Math.PI / 3;
+    return { k, x: C + R * Math.cos(a), y: C + R * Math.sin(a) };
+  });
+  let arrows = '';
+  pos.forEach((p, i) => {
+    const q = pos[(i + 1) % pos.length];
+    const dx = q.x - p.x, dy = q.y - p.y, len = Math.hypot(dx, dy);
+    const ux = dx / len, uy = dy / len;
+    const x1 = p.x + ux * 34, y1 = p.y + uy * 34, x2 = q.x - ux * 38, y2 = q.y - uy * 38;
+    const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    // Etiqueta hacia afuera del hexágono.
+    const ox = mx - C, oy = my - C, ol = Math.hypot(ox, oy);
+    const lx = mx + ox / ol * 30, ly = my + oy / ol * 26;
+    arrows += `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#FFD60A" stroke-width="4" stroke-linecap="round" marker-end="url(#head)"/>
+      <text x="${lx}" y="${ly + 4}" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="12.5" fill="#FFF3B0">${VERB[p.k]}</text>`;
+  });
+  document.getElementById('cycle').innerHTML = `
+    <svg viewBox="0 0 340 340" role="img" aria-label="Ciclo de ventajas entre tipos">
+      <defs><marker id="head" markerWidth="8" markerHeight="8" refX="5" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="#FFD60A"/></marker></defs>
+      <circle cx="${C}" cy="${C}" r="62" fill="rgba(255,255,255,.07)"/>
+      <text x="${C}" y="${C - 4}" text-anchor="middle" font-family="Lilita One, sans-serif" font-size="20" fill="#fff">le gana a</text>
+      <text x="${C}" y="${C + 18}" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="12" fill="#E7D9F2">sigue las flechas</text>
+      ${arrows}
+      ${pos.map(p => `<g transform="translate(${p.x} ${p.y})"><circle r="30" fill="${TYPES[p.k].c}" stroke="#fff" stroke-width="3"/><text y="3" text-anchor="middle" font-size="22">${TYPES[p.k].e}</text><text y="19" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="10" fill="#1B1B1E">${TYPES[p.k].n}</text></g>`).join('')}
+    </svg>`;
+  document.getElementById('rules').innerHTML = CYCLE.map((k, i) => {
+    const q = CYCLE[(i + 1) % CYCLE.length];
+    return `<div class="rule">${TYPES[k].e} <b>${TYPES[k].n}</b> ${VERB[k]} ${WHY[k]} ${TYPES[q].e}</div>`;
+  }).join('');
+
+  // --- Los 4 iniciales.
+  const CAST = [
+    { k: 'chispa', name: 'Chispa', was: 'se queda con su nombre', t: 'fuego', bg: ['#FF8E72', '#FF4D6D'],
+      quote: '"¡A darle!"', de: 'Una chispita que saltó del Volcán una noche y decidió quedarse a conocer el mundo.',
+      es: 'Valiente, alegre y un poquito impulsiva. Siempre dice "¡vamos!" antes de pensarlo, y se pone más roja cuando pierde.',
+      detalle: 'Una llamita en la cabeza que crece cuando se emociona (con el poder cargado, llamarada).',
+      entra: 'Cae del cielo como chispa y se prende.', gana: 'Hace fuegos artificiales con las manos.',
+      stats: [3, 3, 3, 3] },
+    { k: 'zas', name: 'Zas', was: 'antes se llamaba Rayo', t: 'rayo', bg: ['#FFE066', '#FFB703'],
+      quote: '"¡Ni me viste!"', de: 'Nació de la tormenta más rápida de las Nubes; dicen que llegó antes que su propio trueno.',
+      es: 'Hiperactivo, presumido pero de buen corazón. No se queda quieto ni en la foto de victoria. Mejor amigo y rival de Chispa.',
+      detalle: 'Sus picos echan chispitas y deja rayitas de velocidad al correr.',
+      entra: 'Cae como relámpago.', gana: 'Da vueltas tan rápido que se ven tres de él.',
+      stats: [5, 2, 1, 5] },
+    { k: 'tepe', name: 'Tepe', was: 'antes se llamaba Roca (de tepetate, la piedra volcánica)', t: 'roca', bg: ['#C39BD3', '#7B2CBF'],
+      quote: '"Paso… a paso."', de: 'Un guardián que se armó solito con piedras del Castillo hace muchísimos años.',
+      es: 'Cara de enojado y corazón enorme. Habla poquito y despacio, ama las flores y cuida a Burbuja.',
+      detalle: 'Cejas pobladas, grietas y polvito cada que cae al piso.',
+      entra: 'Se arma pieza por pieza.', gana: 'Saca una florecita y sonríe tantito (casi no se nota).',
+      stats: [1, 5, 5, 2] },
+    { k: 'burbuja', name: 'Burbuja', was: 'se queda con su nombre', t: 'agua', bg: ['#80ED99', '#2EC4B6'],
+      quote: '"¡Plop!"', de: 'Salió de una burbuja del mar de Playa Litibú y nunca se reventó.',
+      es: 'Soñadora y curiosa, se distrae con todo. Su antenita capta "señales" (a veces solo es el radio de la palapa).',
+      detalle: 'Antenita con bolita que brilla; flota tarareando.',
+      entra: 'Sube dentro de una burbuja que se revienta.', gana: 'Hace burbujas y se ríe cuando le explotan en la cara.',
+      stats: [3, 2, 2, 4] },
+  ];
+  const STAT_NAMES = ['Velocidad', 'Fuerza', 'Peso', 'Salto'];
+  document.getElementById('cast').innerHTML = CAST.map(c => {
+    const t = TYPES[c.t];
+    return `<article class="card" style="--bg1:${c.bg[0]};--bg2:${c.bg[1]};--c:${t.c}">
+      <div class="art">${figure(c.k)}
+        <div class="name"><h3>${c.name}</h3><div class="was">${c.was}</div><span class="badge">${t.e} Tipo ${t.n}</span></div></div>
+      <div class="body">
+        <p class="quote">${c.quote}</p>
+        <dl class="facts">
+          <dt>De dónde</dt><dd>${c.de}</dd>
+          <dt>Cómo es</dt><dd>${c.es}</dd>
+          <dt>Su detalle</dt><dd>${c.detalle}</dd>
+          <dt>Entrada</dt><dd>${c.entra}</dd>
+          <dt>Al ganar</dt><dd>${c.gana}</dd>
+        </dl>
+        <div class="stats">${c.stats.map((v, i) => `<div class="stat">${STAT_NAMES[i]}<div class="bars">${[1, 2, 3, 4, 5].map(n => `<i class="${n <= v ? 'on' : ''}"></i>`).join('')}</div></div>`).join('')}</div>
+      </div></article>`;
+  }).join('');
+
+  // --- Relaciones.
+  const FRIENDS = [
+    { a: 'chispa', b: 'zas', t: 'Mejores amigos y rivales', d: 'Compiten en todo, hasta en quién come más rápido. Si uno gana, el otro pide revancha.' },
+    { a: 'tepe', b: 'burbuja', t: 'El grandote y la soñadora', d: 'Tepe cuida a Burbuja, y ella lo arrastra a aventuras que él nunca pidió.' },
+    { a: 'burbuja', b: 'chispa', t: 'Agua y fuego… ¿amigas?', d: 'Se quieren mucho, pero Chispa se aleja tantito cada que Burbuja estornuda.' },
+  ];
+  document.getElementById('friends').innerHTML = FRIENDS.map(f => `
+    <div class="friend"><div class="pair">${figure(f.a)}${figure(f.b, 'd2')}</div><b>${f.t}</b><p>${f.d}</p></div>`).join('');
+
+  // --- Próximos (modo historia).
+  const NEXT = [
+    { k: 'brote', n: 'Brote', ts: ['planta'], d: 'Retoño de la gran Higuera con una hojita en la cabeza; tímido pero terco.' },
+    { k: 'magma', n: 'Magma', ts: ['fuego', 'roca'], d: 'Grandote y calientito; se enoja y se calma igual de rápido.' },
+    { k: 'nube', n: 'Nube', ts: ['rayo', 'agua'], d: 'Nubecita gruñona que llueve cuando pierde.' },
+    { k: 'coco', n: 'Coco', ts: ['planta', 'agua'], d: 'Un coco que flota; relajado, "todo tranquilo".' },
+    { k: 'rafa', n: 'Rafa', ts: ['viento'], d: 'Espíritu de viento con bufanda que nunca deja de ondear (de ráfaga); llega sin avisar y se va igual.' },
+  ];
+  document.getElementById('next').innerHTML = NEXT.map(c => `
+    <article class="mini">${figure(c.k)}<h3>${c.n}</h3>
+      <span class="tt">${c.ts.map(t => TYPES[t].e + ' ' + TYPES[t].n).join(' + ')}</span>
+      <p>${c.d}</p><span class="lock">por desbloquear</span></article>`).join('');
+})();
+</script>
+</body>
+</html>
