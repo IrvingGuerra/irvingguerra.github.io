@@ -48,18 +48,31 @@
   <p class="fecha">Duo Arena · Actualizada el 24 de septiembre de 2026</p>
 
   <div class="destacado">
-    <p><strong>En resumen:</strong> Duo Arena no pide registro, correo ni
-    teléfono, no muestra anuncios y no incluye herramientas de análisis. Para
-    poder jugar en línea solo usa un identificador anónimo, el apodo que tú
-    escribes y la posición de tu personaje durante la partida.</p>
+    <p><strong>En resumen:</strong> para jugar no hace falta registrarse. Duo
+    Arena no muestra anuncios y no incluye herramientas de análisis. Para jugar
+    en línea usa un identificador anónimo, el apodo que tú escribes y la
+    posición de tu personaje durante la partida. Si quieres, puedes
+    <strong>vincular tu cuenta de Google</strong> para guardar tu personaje y
+    tu avance en la nube; es opcional.</p>
   </div>
 
   <h2>Qué información se usa y para qué</h2>
   <ul>
     <li><strong>Identificador anónimo.</strong> Al crear o unirte a una sala, la
     aplicación obtiene un identificador aleatorio de Firebase Authentication
-    (inicio de sesión anónimo). No está ligado a tu nombre, correo, teléfono ni
-    cuenta de Google. Sirve para que solo tú puedas mover a tu personaje.</li>
+    (inicio de sesión anónimo). Mientras no vincules una cuenta de Google, no
+    está ligado a tu nombre, correo ni teléfono. Sirve para que solo tú puedas
+    mover a tu personaje.</li>
+    <li><strong>Cuenta de Google (opcional).</strong> Si tocas «Vincular con
+    Google» en «Mi personaje», Firebase Authentication recibe de Google tu
+    nombre, tu correo y tu foto de perfil, y los liga a tu identificador. Se
+    usan solo para que entres a tu cuenta desde otro dispositivo y para
+    mostrarte con qué cuenta entraste; el otro jugador no los ve. Puedes salir
+    de la cuenta cuando quieras.</li>
+    <li><strong>Tu personaje y tus números.</strong> Tu apodo, tu personaje,
+    tus accesorios y cuántas partidas has jugado y ganado (y cuántos KOs y
+    caídas llevas) se guardan en tu espacio de la base de datos, ligado a tu
+    identificador. Solo tú puedes leerlos.</li>
     <li><strong>Apodo.</strong> El nombre que escribes en la pantalla principal
     (opcional, máximo 12 caracteres) se guarda en la sala y lo ve el otro jugador
     de esa sala. Te recomendamos no usar tu nombre completo ni datos personales.</li>
@@ -77,15 +90,15 @@
     datos de la partida no pasan por ese servidor. Si la conexión directa no es
     posible, la partida sigue a través de Firebase.</li>
     <li><strong>En tu celular.</strong> Tu apodo, tu personaje, tus accesorios y
-    si prefieres jugar sin sonido o sin vibración se guardan solo en tu
+    si prefieres jugar sin sonido o sin vibración también se guardan en tu
     dispositivo, para recordarlos la próxima vez.</li>
   </ul>
-  <p>Esta información se usa <strong>únicamente para que el juego en línea
+  <p>Esta información se usa <strong>únicamente para que el juego
   funcione</strong>. No se vende, no se usa para publicidad y no se comparte con
   terceros con fines comerciales.</p>
 
   <h2>Dónde se guarda</h2>
-  <p>Los datos de las salas se guardan en
+  <p>Los datos de las salas y de las cuentas se guardan en
   <a href="https://firebase.google.com/" rel="noopener">Firebase Realtime Database</a>,
   un servicio de Google, con conexión cifrada (HTTPS). Google actúa como
   proveedor del servicio y, como ocurre con cualquier conexión a internet, puede
@@ -94,12 +107,22 @@
   <a href="https://firebase.google.com/support/privacy" rel="noopener">la
   información de privacidad de Firebase</a>.</p>
   <p>Solo pueden leer los datos de una sala los jugadores conectados al juego, y
-  cada jugador solo puede modificar los datos de su propio personaje.</p>
+  cada jugador solo puede modificar los datos de su propio personaje. Los datos
+  de tu cuenta solo los puedes leer y modificar tú.</p>
 
   <h2>Cuánto tiempo se conserva</h2>
   <p>Los datos de las salas se conservan en el servidor después de terminar la
   partida. Si quieres que se eliminen los datos de una sala en la que jugaste,
   escribe al correo de contacto indicando el código de la sala y se borrarán.</p>
+
+  <h2 id="borrar-cuenta">Borrar tu cuenta</h2>
+  <p>Para borrar tu cuenta y todo lo que tiene guardado (tu personaje, tu avance
+  y tus números), escribe a
+  <a href="mailto:guerravargasirving@gmail.com?subject=Borrar%20mi%20cuenta%20de%20Duo%20Arena">guerravargasirving@gmail.com</a>
+  con el asunto «Borrar mi cuenta de Duo Arena», <strong>desde el correo de la
+  cuenta de Google que vinculaste</strong>. Se borrará en un plazo de 30 días y
+  te avisaremos por correo. También llegas aquí desde la aplicación: «Mi
+  personaje» → «Borrar mi cuenta».</p>
 
   <h2>Permisos</h2>
   <p>La aplicación solo solicita permisos de red: <strong>acceso a internet</strong>
