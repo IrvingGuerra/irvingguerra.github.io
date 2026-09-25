@@ -52,8 +52,8 @@
     Arena no muestra anuncios y no incluye herramientas de análisis. Para jugar
     en línea usa un identificador anónimo, el apodo que tú escribes y la
     posición de tu personaje durante la partida. Si quieres, puedes
-    <strong>vincular tu cuenta de Google</strong> para guardar tu personaje y
-    tu avance en la nube; es opcional.</p>
+    <strong>vincular tu correo</strong> para guardar tu personaje y tu avance
+    en la nube; es opcional (el modo historia sí lo pide).</p>
   </div>
 
   <h2>Qué información se usa y para qué</h2>
@@ -63,12 +63,17 @@
     (inicio de sesión anónimo). Mientras no vincules una cuenta de Google, no
     está ligado a tu nombre, correo ni teléfono. Sirve para que solo tú puedas
     mover a tu personaje.</li>
-    <li><strong>Cuenta de Google (opcional).</strong> Si tocas «Vincular con
-    Google» en «Mi personaje», Firebase Authentication recibe de Google tu
-    nombre, tu correo y tu foto de perfil, y los liga a tu identificador. Se
-    usan solo para que entres a tu cuenta desde otro dispositivo y para
-    mostrarte con qué cuenta entraste; el otro jugador no los ve. Puedes salir
-    de la cuenta cuando quieras.</li>
+    <li><strong>Tu correo (opcional).</strong> Si tocas «Vincular con mi
+    correo» en «Mi personaje», te mandamos un código de 6 números para
+    comprobar que el correo es tuyo; al escribirlo, tu correo queda ligado a
+    tu identificador en Firebase Authentication. Se usa solo para que entres a
+    tu cuenta desde otro dispositivo y para mandarte esos códigos; el otro
+    jugador no lo ve y no te mandamos publicidad. Del código solo guardamos
+    una huella cifrada, que vence en 10 minutos. Los correos los envía
+    <a href="https://resend.com/legal/privacy-policy" rel="noopener">Resend</a>
+    por nosotros. Puedes salir de la cuenta cuando quieras. (Las cuentas que
+    se vincularon antes con Google siguen funcionando igual: Google nos dio
+    tu nombre, correo y foto de perfil.)</li>
     <li><strong>Tu personaje, tus números y tu aventura.</strong> Tu apodo, tu
     personaje, tus accesorios, cuántas partidas has jugado y ganado (y cuántos
     KOs y caídas llevas) y, si juegas el modo historia (requiere cuenta), la
@@ -121,8 +126,8 @@
   <p>Para borrar tu cuenta y todo lo que tiene guardado (tu personaje, tu avance
   en la historia, tus premios y tus números), escribe a
   <a href="mailto:guerravargasirving@gmail.com?subject=Borrar%20mi%20cuenta%20de%20Duo%20Arena">guerravargasirving@gmail.com</a>
-  con el asunto «Borrar mi cuenta de Duo Arena», <strong>desde el correo de la
-  cuenta de Google que vinculaste</strong>. Se borrará en un plazo de 30 días y
+  con el asunto «Borrar mi cuenta de Duo Arena», <strong>desde el correo que
+  vinculaste</strong>. Se borrará en un plazo de 30 días y
   te avisaremos por correo. También llegas aquí desde la aplicación: «Mi
   personaje» → «Borrar mi cuenta».</p>
 
