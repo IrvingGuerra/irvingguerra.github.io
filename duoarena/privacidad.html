@@ -98,9 +98,25 @@
     conectado o no, el personaje y los accesorios que elegiste, y la posición y
     el estado de tu personaje mientras juegas. Se envían en tiempo real para que
     el otro jugador vea tus movimientos.</li>
+    <li><strong>Salas públicas (opcional).</strong> Las salas son privadas: solo
+    entra quien tiene el código. Si el anfitrión hace pública su sala, aparece en
+    la lista de salas públicas que ven todos los jugadores, con su apodo, su
+    personaje y accesorios, el escenario, el modo y cuántos jugadores hay. En las
+    salas públicas no se usa la conexión directa: la partida va por el servidor
+    y nadie recibe la dirección IP de los demás. Si el anfitrión saca a alguien
+    de su sala, se guarda en la sala para que esa persona no vuelva a entrar.</li>
+    <li><strong>Amigos (opcional, solo con cuenta vinculada).</strong> Tu cuenta
+    tiene un código de amigo. Tu tarjeta de jugador (apodo, personaje y
+    accesorios, si estás conectado, cuándo te conectaste por última vez y el
+    código de la sala en la que estás esperando) la pueden consultar otros
+    jugadores de Duo Arena; en el juego se muestra a tus amigos y a quien te
+    pide amistad, para que puedan unirse a tu sala. Tu lista de amigos, las
+    solicitudes de amistad y las invitaciones a salas (con el apodo de quien
+    invita y el código de la sala) se guardan en la nube, ligadas a tu cuenta.
+    Rechazar o quitar a un amigo lo marca así; no se borra nada.</li>
     <li><strong>Conexión directa entre los dos jugadores.</strong> Para que el
-    juego responda más rápido, los dos dispositivos de una sala se conectan
-    directamente entre sí (tecnología WebRTC). Para lograrlo, cada dispositivo
+    juego responda más rápido, en las salas privadas los dos dispositivos se
+    conectan directamente entre sí (tecnología WebRTC). Para lograrlo, cada dispositivo
     comparte con el otro jugador de la sala las direcciones de red por las que
     se le puede contactar (dirección IP local y pública); estas direcciones se
     guardan en la sala junto con los demás datos de la partida. Para averiguar
