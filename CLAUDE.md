@@ -11,8 +11,7 @@ Sitio público de Irving en GitHub Pages (se publica solo al hacer push a `main`
   `/jugar/` viven en el repo `duo-arena`, carpeta `sitio/web/`). Se deja para
   los enlaces viejos; `duoarena/img/` se queda (la usa el inicio).
 - `duoarena/privacidad.html`, `getmycurrency/privacidad.html`,
-  `derrapazo/privacidad.html` — políticas de privacidad
-  (`kapumkart/privacidad.html` solo redirige: Kapum Kart ahora es Derrapazo). **No mover estas URLs**: Play Console las tiene registradas. Get My
+  `derrapazo/privacidad.html` — políticas de privacidad. **No mover estas URLs**: Play Console las tiene registradas. Get My
   Currency no sale como proyecto, pero su política se enlaza en el pie.
   La de Duo Arena sale de `duo-arena/sitio/privacidad.html`: cambiarlas juntas.
 
