@@ -3,8 +3,8 @@
 Sitio público de Irving en GitHub Pages (se publica solo al hacer push a `main`).
 
 - `index.html` — página principal: Irving como developer de apps y juegos,
-  proyecto destacado (hoy solo **Duo Arena**, por decisión de Irving; sus
-  botones llevan a duoarena.com.mx, /jugar/ y /perfil/) y contacto
+  proyectos destacados: **Duo Arena** (sus botones llevan a duoarena.com.mx, /jugar/ y /perfil/) y, desde el
+  2026-11-11 (Irving: "Sí, agrégalo"), **LiteDash** (litedash.dev, Play y GitHub; imagen e ícono en `img/`) y contacto
   (GitHub + guerravargasirving@gmail.com, elegido por él para ser público).
 - `duoarena/index.html` — desde el 2026-09-26 solo **redirige a
   https://duoarena.com.mx/** (la página oficial, el perfil web y el juego en
