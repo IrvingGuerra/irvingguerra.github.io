@@ -2,7 +2,7 @@
 
 Sitio público de Irving en GitHub Pages (se publica solo al hacer push a `main`).
 
-- `index.html` — desde el 2026-11-12: **portafolio profesional** de Irving (Software Engineer · AI-native), en
+- `index.html` — desde el 2026-11-12: **portafolio profesional** de Irving (Software Engineer), en
   **inglés por defecto con botón a español** (textos ES en el objeto `ES` del script; `?lang=es` también sirve).
   Diseño "Store Shelf" hecho con la skill **impeccable**: estante con los íconos reales, fichas de FTN (HealthyVita,
   empleado), Nuntius (MDreieck), Kabandu y Krispis (freelance) con enlaces a tiendas y "lo que hay detrás", sección de
