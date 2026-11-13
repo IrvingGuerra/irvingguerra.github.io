@@ -1,169 +1,618 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Irving Guerra · Apps y juegos</title>
-<meta name="description" content="Irving Guerra: desarrollo apps y juegos. Duo Arena, un juego de peleas en línea de 2 a 6 con modo historia, y LiteDash, el launcher para pantallas Android de auto.">
-<meta property="og:title" content="Irving Guerra · Apps y juegos">
-<meta property="og:description" content="Desarrollo apps y juegos. Conoce Duo Arena y LiteDash.">
-<meta property="og:image" content="https://irvingguerra.github.io/duoarena/img/home-run.jpg">
-<link rel="icon" href="duoarena/img/icono.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@600;800;900&display=swap">
+<title>Irving Guerra · Software Engineer, AI-native</title>
+<meta name="description" content="Irving Guerra, Software Engineer. I architect and ship production apps end to end (mobile, web, backend, desktop and IoT) with AI agents built into how I engineer. FTN, Nuntius, Kabandu, Krispis and more.">
+<meta property="og:title" content="Irving Guerra · Software Engineer, AI-native">
+<meta property="og:description" content="Production apps live on the App Store, Google Play and the web, built end to end.">
+<meta property="og:image" content="https://irvingguerra.github.io/img/og.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <style>
-  /* Un solo look a propósito: noche morada con los colores de Duo Arena. */
+  @font-face { font-family: "Geist"; src: url("fonts/Geist-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+  @font-face { font-family: "Geist Mono"; src: url("fonts/GeistMono-Variable.woff2") format("woff2"); font-weight: 100 900; font-display: swap; }
+
   :root {
-    color-scheme: dark;
-    --night: #1E1029;
-    --plum: #3D1A4F;
-    --plum-2: #2B1638;
-    --text: #FFFFFF;
-    --muted: #D9C8E6;
-    --sun: #FFD60A;
-    --coral: #FF4D6D;
-    --sky: #5EC4F0;
+    color-scheme: light;
+    --bg: #FFFFFF;
+    --bg-2: #F5F5F7;
+    --ink: #0B0B0F;
+    --ink-2: #5F5F66;
+    --line: #E3E3E8;
+    --blue: #0062E0;
+    --blue-ink: #FFFFFF;
+    --blue-soft: #E8F0FD;
+    --ok: #1A7F37;
+    --radius: 22px;
+    --icon-r: 22.5%;
+    --sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+    --mono: "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --ease: cubic-bezier(.16, 1, .3, 1);
   }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --bg: #0B0B0F; --bg-2: #16161B; --ink: #F4F4F6; --ink-2: #A1A1AA; --line: #26262D;
+      --blue: #3B8BFF; --blue-ink: #04122B; --blue-soft: #10213D; --ok: #4AC26B;
+    }
+  }
+
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
-    margin: 0;
-    background: radial-gradient(900px 500px at 85% -10%, rgba(94,196,240,.18), transparent 60%),
-                radial-gradient(700px 500px at -10% 30%, rgba(255,77,109,.12), transparent 60%),
-                var(--night);
-    color: var(--text);
-    font: 600 17px/1.6 "Nunito", "Trebuchet MS", system-ui, sans-serif;
-    padding-inline: 16px;
-    padding-block: 0 56px;
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 400 17px/1.55 var(--sans); font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
-  main { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
-  h1, h2, h3 { font-family: "Lilita One", "Arial Rounded MT Bold", "Nunito", sans-serif; font-weight: 400; margin: 0; letter-spacing: .01em; text-wrap: balance; }
-  p { margin: 0; }
-  a { color: inherit; }
+  ::selection { background: var(--blue); color: var(--blue-ink); }
+  a { color: inherit; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; border-radius: 8px; }
+  h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+  h1, h2, h3 { text-wrap: balance; letter-spacing: -.025em; font-weight: 650; }
+  p { text-wrap: pretty; }
+  .wrap { width: min(1120px, 100% - 32px); margin-inline: auto; }
+  .num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .92em; letter-spacing: -.01em; }
+  svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 
-  .intro { padding-top: clamp(40px, 9vw, 96px); display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; }
-  .avatar { width: clamp(88px, 14vw, 128px); aspect-ratio: 1; border-radius: 32%; background: var(--sun); display: grid; place-items: center; box-shadow: 0 8px 0 #C9A200; position: relative; }
-  .avatar svg { width: 76%; height: auto; }
-  .intro h1 { font-size: clamp(44px, 8vw, 76px); line-height: 1; }
-  .intro .role { font-weight: 900; color: var(--sun); font-size: clamp(17px, 2.2vw, 21px); margin-top: 6px; }
-  .intro .about { color: var(--muted); max-width: 56ch; margin-top: 10px; }
+  /* Top bar */
+  .bar { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: saturate(1.6) blur(14px); -webkit-backdrop-filter: saturate(1.6) blur(14px); border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
+  .brand { font-weight: 650; letter-spacing: -.02em; text-decoration: none; margin-right: auto; white-space: nowrap; }
+  .bar nav { display: flex; gap: 22px; font-size: 15px; color: var(--ink-2); }
+  .bar nav a { text-decoration: none; }
+  .bar nav a:hover { color: var(--ink); }
+  .lang { display: inline-flex; border: 1px solid var(--line); border-radius: 99px; padding: 2px; font-size: 13px; font-weight: 600; }
+  .lang button { all: unset; cursor: pointer; padding: 3px 10px; border-radius: 99px; color: var(--ink-2); }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .lang button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-  .label { font-weight: 900; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--sky); }
+  /* Buttons */
+  .pill { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 99px; font: 600 15px/1 var(--sans); text-decoration: none; white-space: nowrap; transition: background-color .2s, transform .2s var(--ease); }
+  .pill.primary { background: var(--blue); color: var(--blue-ink); }
+  .pill.primary:hover { background: color-mix(in srgb, var(--blue) 88%, var(--ink)); }
+  .pill.quiet { background: var(--bg-2); color: var(--ink); }
+  .pill.quiet:hover { background: var(--line); }
+  .pill:active { transform: scale(.97); }
+  .pill.sm { height: 32px; padding: 0 13px; font-size: 14px; }
+  .listing .links .pill { color: var(--blue); }
 
-  .featured {
-    display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
-    background: var(--plum); border-radius: 26px; overflow: hidden;
-    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  /* Hero */
+  .hero { padding: clamp(40px, 6vw, 80px) 0 clamp(28px, 3.5vw, 40px); }
+  .hero h1 { font-size: clamp(38px, 5.2vw, 68px); line-height: 1.03; max-width: 20ch; letter-spacing: -.035em; }
+  .hero .sub { margin-top: 22px; font-size: clamp(18px, 1.6vw, 21px); color: var(--ink-2); max-width: 58ch; }
+  .hero .sub b { color: var(--ink); font-weight: 600; }
+  .hero .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+
+  /* Shelf */
+  .shelf { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 22px 0 18px; }
+  .shelf-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 16px; }
+  .shelf-head h2 { font-size: 21px; letter-spacing: -.015em; }
+  .shelf-head p { color: var(--ink-2); font-size: 14px; }
+  .shelf ol { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; }
+  .shelf li a { display: flex; flex-direction: column; gap: 8px; text-decoration: none; padding: 6px; margin: -6px; border-radius: 18px; transition: background-color .2s; }
+  .shelf li a:hover { background: var(--bg-2); }
+  .shelf img { width: 100%; max-width: 112px; aspect-ratio: 1; border-radius: var(--icon-r); box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 6px 16px -6px rgb(0 0 0 / .18); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; }
+  .shelf .n { font-weight: 600; font-size: 15px; line-height: 1.25; }
+  .shelf .c { font-size: 13px; color: var(--ink-2); line-height: 1.3; }
+  .shelf .live { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ok); font-weight: 600; }
+  .shelf .live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  @media (prefers-reduced-motion: no-preference) {
+    .shelf li { animation: rise .9s var(--ease) both; animation-delay: calc(var(--k) * 70ms + 150ms); }
+    @keyframes rise { from { opacity: .001; transform: translateY(14px) scale(.96); filter: blur(4px); } }
   }
-  .featured .shot { position: relative; min-height: 100%; }
-  .featured .shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .featured .info { padding: clamp(18px, 3vw, 30px); display: flex; flex-direction: column; gap: 12px; }
-  .featured .top { display: flex; align-items: center; gap: 12px; }
-  .featured .top img { width: 56px; height: 56px; border-radius: 14px; }
-  .featured h2 { font-size: 36px; line-height: 1; }
-  .featured .tag { font-size: 13px; font-weight: 900; color: var(--sun); }
-  .featured p { color: var(--muted); }
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
-  .chips span { font-size: 12.5px; font-weight: 800; background: rgba(255,255,255,.1); border-radius: 99px; padding: 3px 10px; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 4px; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 900; border-radius: 16px; padding: 10px 18px; font-size: 16px; }
-  .btn.main { background: var(--coral); color: #fff; box-shadow: 0 5px 0 #B8203F; }
-  .btn.alt { background: rgba(255,255,255,.12); color: #fff; }
-  .btn:hover, .btn:focus-visible { filter: brightness(1.08); }
-  .btn:focus-visible, .contact a:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
 
-  .contact { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .contact .card { background: var(--plum-2); border-radius: 18px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; border: 1px solid rgba(255,255,255,.08); }
-  .contact .card b { font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 900; }
-  .contact .card a { font-size: 18px; font-weight: 900; text-decoration: none; word-break: break-all; }
-  .contact .card a:hover { color: var(--sun); }
+  /* Section heads */
+  section.block { padding: clamp(64px, 8vw, 104px) 0 0; }
+  .head { display: grid; gap: 10px; margin-bottom: 28px; max-width: 62ch; }
+  .head h2 { font-size: clamp(30px, 3.6vw, 44px); line-height: 1.08; }
+  .head p { color: var(--ink-2); font-size: 18px; }
 
-  footer { display: flex; flex-wrap: wrap; gap: 8px 18px; justify-content: space-between; color: var(--muted); font-size: 14px; border-top: 1px solid rgba(255,255,255,.1); padding-top: 18px; }
-  footer nav { display: flex; gap: 14px; flex-wrap: wrap; }
-  footer a { font-weight: 800; }
+  /* Listings */
+  .listing { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 0 32px; padding: 40px 0; border-top: 1px solid var(--line); }
+  .listing:last-child { border-bottom: 1px solid var(--line); }
+  .listing > img { width: 128px; aspect-ratio: 1; border-radius: var(--icon-r); box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 10px 24px -10px rgb(0 0 0 / .25); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; grid-row: span 2; }
+  .listing h3 { font-size: clamp(26px, 2.6vw, 32px); line-height: 1.1; }
+  .listing .by { margin-top: 4px; color: var(--ink-2); font-size: 15.5px; }
+  .listing .by a { color: var(--blue); text-decoration: none; }
+  .listing .desc { margin-top: 14px; max-width: 64ch; }
+  .listing .role { margin-top: 10px; max-width: 64ch; color: var(--ink-2); }
+  .listing .role b { color: var(--ink); font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .links a svg.i { width: 16px; height: 16px; }
+  .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 26px; border-top: 1px solid var(--line); }
+  .facts > div { padding: 12px 16px 0 0; }
+  .facts > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+  .facts dt { font-size: 12.5px; color: var(--ink-2); }
+  .facts dd { font-weight: 600; font-size: 15px; margin-top: 2px; line-height: 1.35; }
+  .system { grid-column: 2; margin-top: 22px; }
+  .system h4 { margin: 0 0 10px; font-size: 13px; font-weight: 600; color: var(--ink-2); }
+  .system ul { display: flex; flex-wrap: wrap; gap: 8px; }
+  .system li { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px 7px 10px; border-radius: 12px; background: var(--bg-2); font-size: 14.5px; line-height: 1.3; }
+  .system li small { color: var(--ink-2); font-size: 13px; }
 
-  @media (max-width: 760px) {
-    .featured { grid-template-columns: 1fr; }
-    .featured .shot img { aspect-ratio: 16 / 9; height: auto; }
+  /* AI */
+  .ai { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+  .ai ul { display: grid; gap: 26px; }
+  .ai li { display: grid; grid-template-columns: 40px 1fr; gap: 14px; }
+  .ai li .ico { width: 40px; height: 40px; border-radius: 12px; background: var(--blue-soft); color: var(--blue); display: grid; place-items: center; }
+  .ai li .ico svg.i { width: 20px; height: 20px; }
+  .ai h3 { font-size: 19px; letter-spacing: -.015em; }
+  .ai li p { color: var(--ink-2); margin-top: 4px; }
+  .tree { background: #0E0E13; color: #D7D7DE; border-radius: var(--radius); padding: 24px 26px; font: 400 14px/1.75 var(--mono); overflow-x: auto; box-shadow: 0 20px 40px -24px rgb(0 0 0 / .45); }
+  .tree .t { color: #8A8A96; display: block; margin-bottom: 10px; font-size: 12.5px; }
+  .tree .c { color: #7FB0FF; }
+  .tree .m { color: #8A8A96; }
+  .tree .k { color: #F2C14E; }
+  .tree pre { margin: 0; font: inherit; white-space: pre; }
+  .tree .foot { margin-top: 16px; padding-top: 14px; border-top: 1px solid #23232B; color: #A9A9B4; font-family: var(--sans); font-size: 14.5px; line-height: 1.5; }
+  .tree .foot b { color: #fff; font-weight: 600; }
+
+  /* Own products */
+  .own { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .own li { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 22px 20px 22px 0; align-content: start; }
+  .own li + li { padding-left: 20px; border-left: 1px solid var(--line); }
+  .own img { width: 64px; aspect-ratio: 1; border-radius: var(--icon-r); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; }
+  .own h3 { font-size: 17px; letter-spacing: -.01em; }
+  .own p { font-size: 14.5px; color: var(--ink-2); margin-top: 2px; line-height: 1.4; }
+  .own .links { margin-top: 10px; gap: 4px 14px; }
+  .own .links a { font-size: 13.5px; color: var(--blue); text-decoration: none; font-weight: 600; }
+  .own .links a:hover { text-decoration: underline; }
+
+  /* Experience */
+  .cv { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 56px; }
+  .tl li { display: grid; grid-template-columns: 112px 1fr; gap: 20px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .tl li:last-child { border-bottom: 1px solid var(--line); }
+  .tl .yr { color: var(--ink-2); font-size: 14px; padding-top: 2px; }
+  .tl h3 { font-size: 17px; letter-spacing: -.01em; }
+  .tl h3 span { color: var(--ink-2); font-weight: 500; }
+  .tl p { font-size: 15px; color: var(--ink-2); margin-top: 3px; }
+  .side h3 { font-size: 15px; color: var(--ink-2); font-weight: 600; letter-spacing: 0; margin-bottom: 12px; }
+  .side + .side { margin-top: 36px; }
+  .edu li { padding: 14px 0; border-top: 1px solid var(--line); }
+  .edu li:last-child { border-bottom: 1px solid var(--line); }
+  .edu b { display: block; font-weight: 600; }
+  .edu span { color: var(--ink-2); font-size: 15px; }
+  .stack { display: flex; flex-wrap: wrap; gap: 6px; }
+  .stack li { font-size: 14px; padding: 5px 11px; border-radius: 99px; border: 1px solid var(--line); }
+
+  /* Contact */
+  .contact { margin-top: clamp(72px, 9vw, 120px); background: var(--bg-2); border-radius: 32px; padding: clamp(32px, 6vw, 72px); display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 32px; align-items: end; }
+  .contact h2 { font-size: clamp(32px, 4.4vw, 56px); line-height: 1.04; }
+  .contact p { color: var(--ink-2); margin-top: 14px; font-size: 18px; max-width: 46ch; }
+  .contact .mail { display: inline-block; margin-top: 22px; font-size: clamp(18px, 2vw, 24px); font-weight: 600; color: var(--blue); text-decoration: none; word-break: break-all; }
+  .contact .mail:hover { text-decoration: underline; }
+  .contact ul { display: grid; gap: 0; }
+  .contact ul a { display: flex; align-items: center; gap: 12px; padding: 14px 4px; border-top: 1px solid var(--line); text-decoration: none; font-weight: 600; }
+  .contact ul li:last-child a { border-bottom: 1px solid var(--line); }
+  .contact ul a .meta { margin-left: auto; color: var(--ink-2); font-weight: 400; font-size: 14px; }
+  .contact ul a:hover { color: var(--blue); }
+
+  footer { padding: 40px 0 56px; color: var(--ink-2); font-size: 14px; display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; }
+  footer nav { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+  footer a { text-decoration: none; }
+  footer a:hover { color: var(--ink); text-decoration: underline; }
+
+  @media (max-width: 980px) {
+    .bar nav { display: none; }
+    .shelf ol { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 20px; }
+    .ai, .cv, .contact { grid-template-columns: 1fr; }
+    .own { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .own li:nth-child(3) { padding-left: 0; border-left: 0; }
+    .own li:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .facts > div:nth-child(3) { padding-left: 0; border-left: 0; }
+    .facts > div:nth-child(n+3) { margin-top: 12px; border-top: 1px solid var(--line); }
   }
-  @media (max-width: 520px) {
-    .intro { grid-template-columns: 1fr; }
-    .contact { grid-template-columns: 1fr; }
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .bar .cta-top { display: none; }
+    .shelf ol { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .shelf .c, .shelf .live, .shelf-head p { display: none; }
+    .shelf .n { font-size: 12.5px; text-align: center; }
+    .shelf li a { align-items: center; }
+    .listing { grid-template-columns: 72px minmax(0, 1fr); gap: 0 16px; padding: 32px 0; }
+    .listing > img { width: 72px; grid-row: auto; }
+    .listing .desc, .listing .role, .links, .facts, .system { grid-column: 1 / -1; }
+    .own { grid-template-columns: 1fr; }
+    .own li, .own li + li { padding: 18px 0; border-left: 0; }
+    .own li + li { border-top: 1px solid var(--line); }
+    .tl li { grid-template-columns: 1fr; gap: 4px; }
   }
+  @media print { .bar, .lang, .shelf, footer { display: none; } }
 </style>
 </head>
 <body>
-<main>
-  <header class="intro">
-    <div class="avatar" aria-hidden="true">
-      <!-- Chispa, de Duo Arena -->
-      <svg viewBox="0 0 60 64"><path d="M30 2 C 24 8, 22 12, 26 16 C 23 13, 34 12, 33 16 C 38 11, 35 6, 30 2 Z" fill="#FFB627"/><path d="M30 7 C 27 11, 27 13, 29 15 C 29 13, 33 13, 32 15 C 34 12, 32 9, 30 7 Z" fill="#FFF3B0"/><ellipse cx="30" cy="62" rx="18" ry="2.5" fill="#000" opacity=".15"/><rect x="12" y="14" width="36" height="48" rx="12" fill="#FF4D6D"/><circle cx="27" cy="29" r="5.5" fill="#fff"/><circle cx="41" cy="29" r="5.5" fill="#fff"/><circle cx="29" cy="29" r="2.8" fill="#1B1B1E"/><circle cx="43" cy="29" r="2.8" fill="#1B1B1E"/></svg>
-    </div>
-    <div>
-      <h1>Irving Guerra</h1>
-      <p class="role">Desarrollo apps y juegos</p>
-      <p class="about">Hago apps móviles, web y juegos con Flutter, Kotlin y Firebase. Aquí vive lo que publico: mis juegos, mis apps y sus políticas de privacidad.</p>
-    </div>
-  </header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></symbol>
+    <symbol id="i-web" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M6.5 6.8h.01M9 6.8h.01"/></symbol>
+    <symbol id="i-server" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="7" rx="2"/><rect x="3.5" y="13.5" width="17" height="7" rx="2"/><path d="M7.5 7h.01M7.5 17h.01M11 7h5M11 17h5"/></symbol>
+    <symbol id="i-desktop" viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="13" rx="2"/><path d="M9 20.5h6M12 16.5v4"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2"/><path d="M9.5 2.5v4M14.5 2.5v4M9.5 17.5v4M14.5 17.5v4M2.5 9.5h4M2.5 14.5h4M17.5 9.5h4M17.5 14.5h4"/></symbol>
+    <symbol id="i-wave" viewBox="0 0 24 24"><path d="M3 12h2M7 8v8M11 4.5v15M15 8v8M19 10.5v3M21 12h.01"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M3 12h4l2-5 4 10 2-5h6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4.5 18.5 3.5 21l3.6-1.6A9 9 0 1 0 4.5 18.5Z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></symbol>
+    <symbol id="i-cloud" viewBox="0 0 24 24"><path d="M7 18.5h10.5a4 4 0 0 0 .4-8A6 6 0 0 0 6.3 9.6 4.5 4.5 0 0 0 7 18.5Z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2.5 6.5h11v10h-11zM13.5 10h4l3 3.5v3h-7"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+    <symbol id="i-finger" viewBox="0 0 24 24"><path d="M12 4a7 7 0 0 0-7 7v2M19 11a7 7 0 0 0-3.5-6M9 12a3 3 0 0 1 6 0c0 3-1 6-3 8.5M12 12c0 3.5-1.3 6.5-4 8.5M18.5 15c-.3 2-1 4-2.2 5.5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v12M7 11l5 5 5-5M5 20h14"/></symbol>
+    <symbol id="i-agents" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="2.5"/><circle cx="5.5" cy="17.5" r="2.5"/><circle cx="18.5" cy="17.5" r="2.5"/><path d="M10.7 7.7 6.8 15.3M13.3 7.7l3.9 7.6M8 17.5h8"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3c.6 4.6 2.4 6.4 7 7-4.6.6-6.4 2.4-7 7-.6-4.6-2.4-6.4-7-7 4.6-.6 6.4-2.4 7-7Z"/><path d="M19 16.5c.2 1.6.9 2.3 2.5 2.5-1.6.2-2.3.9-2.5 2.5-.2-1.6-.9-2.3-2.5-2.5 1.6-.2 2.3-.9 2.5-2.5Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/><path d="m8 12.5 2.7 2.7L16.5 9"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></symbol>
+    <symbol id="i-in" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3.5"/><path d="M8 10.5V17M8 7.5h.01M12 17v-3.8c0-1.7 1-2.7 2.3-2.7s2.2.9 2.2 2.7V17M12 10.5V17"/></symbol>
+    <symbol id="i-gh" viewBox="0 0 24 24"><path d="M9 19c-4.5 1.4-4.5-2.2-6-2.6m12 4.6v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></symbol>
+  </defs>
+</svg>
 
-  <section aria-labelledby="t-juegos" style="display:flex;flex-direction:column;gap:14px">
-    <span class="label" id="t-juegos">Mi juego más reciente</span>
-    <article class="featured">
-      <a class="shot" href="https://duoarena.com.mx/"><img src="duoarena/img/home-run.jpg" alt="Duo Arena: letrero ¡HOME RUN! después de un batazo" width="1280" height="720"></a>
-      <div class="info">
-        <div class="top">
-          <img src="duoarena/img/icono.png" alt="" width="56" height="56">
-          <div><h2>Duo Arena</h2><span class="tag">Peleas de plataformas en línea, de 2 a 6</span></div>
-        </div>
-        <p>Un juego estilo Smash para jugar en pareja o con toda la banda: cada quien en su celular. Modo historia por Isla Higuera, 10 personajes con tipo, peleas por equipos, items, seis escenarios y la compu para cuando juegas solo (también sin internet). Tu perfil también se ve en la web.</p>
-        <div class="chips"><span>Android</span><span>Navegador</span><span>En línea</span><span>2 a 6 jugadores</span><span>Modo historia</span></div>
-        <div class="actions">
-          <a class="btn main" href="https://duoarena.com.mx/">Conócelo</a>
-          <a class="btn alt" href="https://duoarena.com.mx/jugar/">▶ Jugar en el navegador</a>
-          <a class="btn alt" href="https://duoarena.com.mx/perfil/">👤 Mi perfil</a>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <section aria-labelledby="t-apps" style="display:flex;flex-direction:column;gap:14px">
-    <span class="label" id="t-apps">Mi app para autos</span>
-    <article class="featured">
-      <a class="shot" href="https://litedash.dev/"><img src="img/litedash.jpg" alt="LiteDash: un sedán blanco en 3D con su reflejo" width="730" height="570" loading="lazy"></a>
-      <div class="info">
-        <div class="top">
-          <img src="img/litedash-icono.png" alt="" width="56" height="56">
-          <div><h2>LiteDash</h2><span class="tag">Launcher para pantallas Android de auto y moto</span></div>
-        </div>
-        <p>Convierte la pantalla de tu auto en un tablero limpio: tu auto en 3D, escáner OBD2, presión de llantas, la radio FM de tu pantalla, música (también la de tu celular con LiteDash Connect) y mapa, todo en 1.8 MB y desde Android 6. Gratis, sin anuncios y de código abierto.</p>
-        <div class="chips"><span>Android</span><span>Pantallas de auto</span><span>1.8 MB</span><span>Código abierto</span><span>Gratis</span></div>
-        <div class="actions">
-          <a class="btn main" href="https://litedash.dev/">Conócelo</a>
-          <a class="btn alt" href="https://play.google.com/store/apps/details?id=com.irvingguerra.litedash">▶ Google Play</a>
-          <a class="btn alt" href="https://github.com/IrvingGuerra/litedash">★ GitHub</a>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <section aria-labelledby="t-contacto" style="display:flex;flex-direction:column;gap:14px">
-    <span class="label" id="t-contacto">Contacto</span>
-    <div class="contact">
-      <div class="card"><b>Correo</b><a href="mailto:guerravargasirving@gmail.com">guerravargasirving@gmail.com</a></div>
-      <div class="card"><b>GitHub</b><a href="https://github.com/IrvingGuerra" target="_blank" rel="noopener">github.com/IrvingGuerra</a></div>
-    </div>
-  </section>
-
-  <footer>
-    <span>© 2026 Irving Guerra</span>
-    <nav aria-label="Políticas de privacidad">
-      Privacidad:
-      <a href="duoarena/privacidad.html">Duo Arena</a>
-      <a href="https://litedash.dev/privacidad/">LiteDash</a>
-      <a href="getmycurrency/privacidad.html">Get My Currency</a>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top">Irving Guerra</a>
+    <nav aria-label="Sections">
+      <a href="#work" data-i18n="nav.work">Work</a>
+      <a href="#ai" data-i18n="nav.ai">AI</a>
+      <a href="#products" data-i18n="nav.products">Products</a>
+      <a href="#experience" data-i18n="nav.experience">Experience</a>
     </nav>
-  </footer>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-lang="es" aria-pressed="false">ES</button>
+    </div>
+    <a class="pill primary sm cta-top" href="#contact" data-i18n="nav.contact">Contact</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap">
+    <h1 data-i18n="hero.h1">I architect and ship production apps, end to end, with AI in the loop.</h1>
+    <p class="sub" data-i18n="hero.sub"><b>Software Engineer, 8+ years.</b> Mobile, web, backend, desktop and IoT. I lead the FTN app at HealthyVita and I'm the sole engineer behind live platforms for companies across Mexico, built with AI agents as part of how I engineer.</p>
+    <div class="cta">
+      <a class="pill primary" href="#contact"><svg class="i"><use href="#i-mail"/></svg><span data-i18n="hero.contact">Get in touch</span></a>
+      <a class="pill quiet" href="cv.pdf" download data-cv><svg class="i"><use href="#i-down"/></svg><span data-i18n="hero.cv">Download CV</span></a>
+    </div>
+  </section>
+
+  <section class="shelf wrap" aria-labelledby="shelf-t">
+    <div class="shelf-head">
+      <h2 id="shelf-t" data-i18n="shelf.t">Live right now</h2>
+      <p data-i18n="shelf.p">On the App Store, Google Play and the web</p>
+    </div>
+    <ol>
+      <li style="--k:0"><a href="#ftn"><img src="img/apps/ftn.webp" alt="" width="112" height="112"><span class="n">FTN</span><span class="c">HealthyVita</span><span class="live">iOS · Android</span></a></li>
+      <li style="--k:1"><a href="#nuntius"><img src="img/apps/nuntius.webp" alt="" width="112" height="112"><span class="n">Nuntius</span><span class="c">MDreieck</span><span class="live">iOS · Android</span></a></li>
+      <li style="--k:2"><a href="#kabandu"><img src="img/apps/kabandu.webp" alt="" width="112" height="112"><span class="n">Kabandu</span><span class="c" data-i18n="shelf.kab">Beauty salon chain</span><span class="live">iOS · Android</span></a></li>
+      <li style="--k:3"><a href="#krispis"><img src="img/apps/krispis.webp" alt="" width="112" height="112"><span class="n">Krispis</span><span class="c" data-i18n="shelf.kri">Restaurant chain</span><span class="live">Web</span></a></li>
+      <li style="--k:4"><a href="#products"><img src="img/apps/litedash.webp" alt="" width="112" height="112"><span class="n">LiteDash</span><span class="c" data-i18n="shelf.own">My product</span><span class="live">Android</span></a></li>
+      <li style="--k:5"><a href="#products"><img src="img/apps/duoarena.webp" alt="" width="112" height="112"><span class="n">Duo Arena</span><span class="c" data-i18n="shelf.own2">My game</span><span class="live">Android · Web</span></a></li>
+      <li style="--k:6"><a href="#products"><img src="img/apps/derrapazo.webp" alt="" width="112" height="112"><span class="n">Derrapazo</span><span class="c" data-i18n="shelf.own2b">My game</span><span class="live">Android · Web</span></a></li>
+    </ol>
+  </section>
+
+  <section class="block wrap" id="work" aria-labelledby="work-t">
+    <div class="head">
+      <h2 id="work-t" data-i18n="work.t">Platforms in production</h2>
+      <p data-i18n="work.p">Not side projects: real businesses run on these every day. Behind each icon is the whole system I built.</p>
+    </div>
+
+    <article class="listing" id="ftn">
+      <img src="img/apps/ftn.webp" alt="FTN app icon" width="128" height="128" loading="lazy">
+      <div>
+        <h3>FTN</h3>
+        <p class="by"><a href="https://ftnmethod.com" target="_blank" rel="noopener">HealthyVita</a> · <span data-i18n="ftn.by">Software Engineer (employee) · 2024 – present</span></p>
+        <p class="desc" data-i18n="ftn.desc">Subscription fitness platform with three pillars: training, nutrition and mental wellbeing, plus community, challenges, gamification and wearable data.</p>
+        <p class="role" data-i18n="ftn.role"><b>Lead engineer of the mobile app</b> (1,599 of its 1,753 commits) and full-stack across the Django API, the Angular backoffice and the public web, in a team of about fifteen.</p>
+        <div class="links">
+          <a class="pill quiet sm" href="https://apps.apple.com/mx/app/ftn/id1660612252" target="_blank" rel="noopener">App Store <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://play.google.com/store/apps/details?id=app.fitathon.ftnmymethod.ftn_app" target="_blank" rel="noopener">Google Play <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://ftnmethod.com" target="_blank" rel="noopener">ftnmethod.com <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="f.role">Role</dt><dd data-i18n="ftn.f1">Lead mobile · Full-stack</dd></div>
+          <div><dt data-i18n="f.platforms">Platforms</dt><dd>iOS · Android · Web</dd></div>
+          <div><dt data-i18n="f.stack">Core stack</dt><dd>Flutter · Django · Angular</dd></div>
+          <div><dt data-i18n="f.commits">My commits</dt><dd class="num">2,250+</dd></div>
+        </dl>
+      </div>
+      <div class="system">
+        <h4 data-i18n="sys">What's behind it</h4>
+        <ul>
+          <li><svg class="i"><use href="#i-phone"/></svg><span data-i18n="ftn.s1">iOS &amp; Android app</span> <small>Flutter · Shorebird</small></li>
+          <li><svg class="i"><use href="#i-server"/></svg><span>REST API</span> <small>Django · Postgres</small></li>
+          <li><svg class="i"><use href="#i-web"/></svg><span data-i18n="ftn.s3">Backoffice &amp; web</span> <small>Angular 20</small></li>
+          <li><svg class="i"><use href="#i-cloud"/></svg><span data-i18n="ftn.s4">Cloud</span> <small>AWS ECS · Lambda · Terraform</small></li>
+          <li><svg class="i"><use href="#i-card"/></svg><span data-i18n="ftn.s5">In-app purchases &amp; 4 payment channels</span></li>
+          <li><svg class="i"><use href="#i-heart"/></svg><span>Apple Health · Health Connect</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="listing" id="nuntius">
+      <img src="img/apps/nuntius.webp" alt="Nuntius app icon" width="128" height="128" loading="lazy">
+      <div>
+        <h3>Nuntius</h3>
+        <p class="by"><a href="https://mdreieck.github.io/nuntius-web/" target="_blank" rel="noopener">MDreieck</a> · <span data-i18n="nun.by">Sole engineer · 2020 – present (through Antware, independent since 2024)</span></p>
+        <p class="desc" data-i18n="nun.desc">Early-warning and emergency-alert platform for Mexico: it receives seismic alerts, issues CAP alerts by territory, rebroadcasts them over radio (SAME/EAS) and controls a field fleet of IoT sirens, weather stations and river gauges with automatic thresholds.</p>
+        <p class="role" data-i18n="nun.role"><b>Every layer is mine</b>, from the real-time server to the firmware on the devices, deployed as dedicated servers per client.</p>
+        <div class="links">
+          <a class="pill quiet sm" href="https://apps.apple.com/mx/app/nuntius-md/id6810503759" target="_blank" rel="noopener">App Store <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://play.google.com/store/apps/details?id=com.mdreieck.nuntius" target="_blank" rel="noopener">Google Play <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://mdreieck.github.io/nuntius-web/" target="_blank" rel="noopener">Website <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="f.role">Role</dt><dd data-i18n="nun.f1">Sole engineer</dd></div>
+          <div><dt data-i18n="f.platforms">Platforms</dt><dd data-i18n="nun.f2">Mobile · Web · Desktop · IoT</dd></div>
+          <div><dt data-i18n="f.stack">Core stack</dt><dd>Meteor · Vue · Flutter</dd></div>
+          <div><dt data-i18n="f.commits">My commits</dt><dd class="num">1,290+</dd></div>
+        </dl>
+      </div>
+      <div class="system">
+        <h4 data-i18n="sys">What's behind it</h4>
+        <ul>
+          <li><svg class="i"><use href="#i-phone"/></svg><span data-i18n="nun.s1">App with full-screen critical alerts</span> <small>Flutter</small></li>
+          <li><svg class="i"><use href="#i-web"/></svg><span data-i18n="nun.s2">Real-time control panel</span> <small>Meteor · Vue · MongoDB</small></li>
+          <li><svg class="i"><use href="#i-desktop"/></svg><span data-i18n="nun.s3">3 desktop apps</span> <small>Electron · Next.js</small></li>
+          <li><svg class="i"><use href="#i-chip"/></svg><span>Raspberry Pi · ESP32</span> <small>Node.js · C++</small></li>
+          <li><svg class="i"><use href="#i-wave"/></svg><span data-i18n="nun.s5">Neural TTS alert voices</span> <small>Piper · Google TTS</small></li>
+          <li><svg class="i"><use href="#i-server"/></svg><span data-i18n="nun.s6">Dedicated server per client</span> <small>Docker</small></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="listing" id="kabandu">
+      <img src="img/apps/kabandu.webp" alt="Kabandu app icon" width="128" height="128" loading="lazy">
+      <div>
+        <h3>Kabandu</h3>
+        <p class="by"><span data-i18n="kab.by">Kabandu · Freelance, founding engineer · 2025 – present</span></p>
+        <p class="desc" data-i18n="kab.desc">The operating system of a brow and beauty salon chain: point of sale, bookings, staff check-in, client profiles, gift cards, loyalty points and memberships.</p>
+        <p class="role" data-i18n="kab.role"><b>Designed and built from zero, alone</b>, and still evolving it month after month with the client.</p>
+        <div class="links">
+          <a class="pill quiet sm" href="https://apps.apple.com/mx/app/kabandu/id6747091586" target="_blank" rel="noopener">App Store <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://play.google.com/store/apps/details?id=com.kabandu.kabanduApp" target="_blank" rel="noopener">Google Play <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="f.role">Role</dt><dd data-i18n="kab.f1">Founding engineer</dd></div>
+          <div><dt data-i18n="f.platforms">Platforms</dt><dd data-i18n="kab.f2">Desktop · Mobile · Web</dd></div>
+          <div><dt data-i18n="f.stack">Core stack</dt><dd>Electron · Flutter · Firebase</dd></div>
+          <div><dt data-i18n="f.commits">My commits</dt><dd class="num">1,200+</dd></div>
+        </dl>
+      </div>
+      <div class="system">
+        <h4 data-i18n="sys">What's behind it</h4>
+        <ul>
+          <li><svg class="i"><use href="#i-desktop"/></svg><span data-i18n="kab.s1">POS &amp; admin desktop</span> <small>Electron · Next.js</small></li>
+          <li><svg class="i"><use href="#i-finger"/></svg><span data-i18n="kab.s2">Fingerprint reader at the POS</span></li>
+          <li><svg class="i"><use href="#i-phone"/></svg><span data-i18n="kab.s2b">Staff check-in with geolocation</span></li>
+          <li><svg class="i"><use href="#i-phone"/></svg><span data-i18n="kab.s3">Client app &amp; staff app</span> <small>Flutter</small></li>
+          <li><svg class="i"><use href="#i-server"/></svg><span data-i18n="kab.s4">Server</span> <small>TypeScript · Fly.io</small></li>
+          <li><svg class="i"><use href="#i-chat"/></svg><span data-i18n="kab.s5">WhatsApp automation</span></li>
+          <li><svg class="i"><use href="#i-web"/></svg><span data-i18n="kab.s6">Web: tickets &amp; gift cards</span> <small>React</small></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="listing" id="krispis">
+      <img src="img/apps/krispis.webp" alt="Krispis logo" width="128" height="128" loading="lazy">
+      <div>
+        <h3>Krispis</h3>
+        <p class="by"><span data-i18n="kri.by">Krispis Breakfast n' Dinner · Freelance · 2023 – present</span></p>
+        <p class="desc" data-i18n="kri.desc">Full restaurant platform for a multi-branch chain: online ordering with delivery, kiosk, table QR ordering, kitchen display, point of sale, CRM and inventory.</p>
+        <p class="role" data-i18n="kri.role"><b>Sole engineer since 2023</b>, still evolving it with the client.</p>
+        <div class="links">
+          <a class="pill quiet sm" href="https://app.krispis.mx" target="_blank" rel="noopener">app.krispis.mx <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="f.role">Role</dt><dd data-i18n="kri.f1">Sole engineer</dd></div>
+          <div><dt data-i18n="f.platforms">Platforms</dt><dd data-i18n="kri.f2">Web · Kiosk · Kitchen</dd></div>
+          <div><dt data-i18n="f.stack">Core stack</dt><dd>Next.js · React · Node</dd></div>
+          <div><dt data-i18n="f.commits">My commits</dt><dd class="num">1,160+</dd></div>
+        </dl>
+      </div>
+      <div class="system">
+        <h4 data-i18n="sys">What's behind it</h4>
+        <ul>
+          <li><svg class="i"><use href="#i-web"/></svg><span data-i18n="kri.s1">Ordering web</span> <small>Next.js · Stripe</small></li>
+          <li><svg class="i"><use href="#i-desktop"/></svg><span data-i18n="kri.s2">Admin, POS &amp; kitchen display</span> <small>React · MUI</small></li>
+          <li><svg class="i"><use href="#i-server"/></svg><span data-i18n="kri.s3">Server</span> <small>TypeScript · Fly.io</small></li>
+          <li><svg class="i"><use href="#i-truck"/></svg><span>Uber Direct delivery</span></li>
+          <li><svg class="i"><use href="#i-card"/></svg><span>Google Wallet · Web push</span></li>
+          <li><svg class="i"><use href="#i-chat"/></svg><span data-i18n="kri.s6">WhatsApp OTP login</span></li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section class="block wrap" id="ai" aria-labelledby="ai-t">
+    <div class="ai">
+      <div>
+        <div class="head">
+          <h2 id="ai-t" data-i18n="ai.t">AI is how I engineer, not a buzzword</h2>
+          <p data-i18n="ai.p">One engineer can own a whole platform when the process is right. Mine runs on AI agents with clear context, rules and verification.</p>
+        </div>
+        <ul>
+          <li><span class="ico"><svg class="i"><use href="#i-agents"/></svg></span><div><h3 data-i18n="ai.1t">Agent-driven development</h3><p data-i18n="ai.1p">Layered project context, per-area rules, MCP integrations and subagents. Plans live next to the code and nothing ships before it's verified in production.</p></div></li>
+          <li><span class="ico"><svg class="i"><use href="#i-spark"/></svg></span><div><h3 data-i18n="ai.2t">AI inside the products</h3><p data-i18n="ai.2p">The apps I build include AI chatbots, operations-analysis agents and neural text-to-speech voices for emergency alerts.</p></div></li>
+          <li><span class="ico"><svg class="i"><use href="#i-check"/></svg></span><div><h3 data-i18n="ai.3t">Cost and quality aware</h3><p data-i18n="ai.3p">I model LLM cost per conversation, pick the right model for each job and review every change an agent makes before it reaches users.</p></div></li>
+        </ul>
+      </div>
+      <div class="tree" aria-label="Example of how a platform's AI context is organized">
+<span class="t" data-i18n="ai.tree">How a platform is organized for AI agents</span>
+<pre><span class="c">platform/</span>
+├─ <span class="k">CLAUDE.md</span>            <span class="m">shared context</span>
+├─ app/<span class="k">CLAUDE.md</span>        <span class="m">mobile rules</span>
+├─ api/<span class="k">CLAUDE.md</span>        <span class="m">backend rules</span>
+├─ web/<span class="k">CLAUDE.md</span>
+├─ .claude/rules/       <span class="m">per-area, by path</span>
+├─ plans/               <span class="m">archived on release</span>
+└─ gotchas.md           <span class="m">#1 – #110</span></pre>
+        <p class="foot" data-i18n="ai.foot"><b>~2,850 commits</b> co-authored with Claude across FTN, Nuntius, Kabandu and Krispis.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block wrap" id="products" aria-labelledby="own-t">
+    <div class="head">
+      <h2 id="own-t" data-i18n="own.t">My own products</h2>
+      <p data-i18n="own.p">Designed, built and published by me, start to finish.</p>
+    </div>
+    <ul class="own">
+      <li><img src="img/apps/litedash.webp" alt="" width="64" height="64" loading="lazy"><div><h3>LiteDash</h3><p data-i18n="own.ld">Open-source Android launcher for car head units, with a phone companion app.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.litedash" target="_blank" rel="noopener">Google Play</a><a href="https://litedash.dev" target="_blank" rel="noopener">litedash.dev</a><a href="https://github.com/IrvingGuerra/litedash" target="_blank" rel="noopener">GitHub</a></div></div></li>
+      <li><img src="img/apps/duoarena.webp" alt="" width="64" height="64" loading="lazy"><div><h3>Duo Arena</h3><p data-i18n="own.da">Online platform fighter for 2 to 6 players, with story mode.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.duoarena" target="_blank" rel="noopener">Google Play</a><a href="https://duoarena.com.mx" target="_blank" rel="noopener">duoarena.com.mx</a></div></div></li>
+      <li><img src="img/apps/derrapazo.webp" alt="" width="64" height="64" loading="lazy"><div><h3>Derrapazo</h3><p data-i18n="own.dz">3D kart racer with online rooms, built in Godot.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.derrapazo" target="_blank" rel="noopener">Google Play</a><a href="https://derrapazo.web.app" target="_blank" rel="noopener">Web</a></div></div></li>
+      <li><img src="img/apps/getmycurrency.webp" alt="" width="64" height="64" loading="lazy"><div><h3>Get My Currency</h3><p data-i18n="own.gmc">Simple currency converter.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.getmycurrency" target="_blank" rel="noopener">Google Play</a></div></div></li>
+    </ul>
+  </section>
+
+  <section class="block wrap" id="experience" aria-labelledby="exp-t">
+    <div class="head">
+      <h2 id="exp-t" data-i18n="exp.t">Experience</h2>
+    </div>
+    <div class="cv">
+      <ol class="tl">
+        <li><span class="yr num">2024 – now</span><div><h3>HealthyVita <span data-i18n="exp.hv">· Software Engineer</span></h3><p data-i18n="exp.hvp">FTN: lead of the Flutter app, plus Django API and Angular backoffice and web.</p></div></li>
+        <li><span class="yr num">2020 – now</span><div><h3>MDreieck <span data-i18n="exp.md">· Nuntius, sole engineer</span></h3><p data-i18n="exp.mdp">Seismic and emergency alert platform. Through Antware until 2024, independent since.</p></div></li>
+        <li><span class="yr num">2023 – now</span><div><h3 data-i18n="exp.fl">Freelance · Kabandu, Krispis</h3><p data-i18n="exp.flp">End-to-end platforms for a beauty salon chain and a restaurant chain.</p></div></li>
+        <li><span class="yr num">2020 – 2024</span><div><h3>Antware <span>· Software Engineer</span></h3><p data-i18n="exp.anp">React Native, Meteor, Vue and React, real-time WebSockets, Jest, Scrum. Embedded seismic-alert systems with Raspberry Pi and EAS-SAME radio.</p></div></li>
+        <li><span class="yr num">2021 – 2022</span><div><h3>Carklin <span>· Full-stack Developer</span></h3><p data-i18n="exp.cap">React Native app, Cloud Functions APIs, push notifications and in-app purchases with RevenueCat.</p></div></li>
+        <li><span class="yr num">2019 – 2020</span><div><h3>IPN <span>· Full-stack Developer</span></h3><p data-i18n="exp.ipp">React and Firebase, PHP and MySQL, Java with Spring Boot and Hibernate, React Native.</p></div></li>
+        <li><span class="yr num">2018 – 2024</span><div><h3 data-i18n="exp.fr">Freelance · 10+ projects</h3><p data-i18n="exp.frp">Bongless (restaurant group), Relpers, Neurona Wireless (voice requests with Dialogflow and Google Assistant), MyBike (App Store and Google Play).</p></div></li>
+      </ol>
+      <div>
+        <div class="side">
+          <h3 data-i18n="edu.t">Education</h3>
+          <ul class="edu">
+            <li><b data-i18n="edu.1">B.S. Computer Systems Engineering</b><span>ESCOM, Instituto Politécnico Nacional · 2015 – 2020</span></li>
+            <li><b data-i18n="edu.2">Digital Systems Technician</b><span>CECyT 1, Instituto Politécnico Nacional · 2013 – 2015</span></li>
+          </ul>
+        </div>
+        <div class="side">
+          <h3 data-i18n="stack.t">Stack I ship with</h3>
+          <ul class="stack">
+            <li>Flutter</li><li>Kotlin · Compose</li><li>TypeScript</li><li>React</li><li>Next.js</li><li>Angular</li><li>Vue</li><li>Node.js</li><li>Python · Django</li><li>Meteor</li><li>Firebase</li><li>PostgreSQL</li><li>MongoDB</li><li>AWS</li><li>Fly.io</li><li>Terraform</li><li>Docker</li><li>Electron</li><li>Godot</li><li>Claude Code · MCP</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="contact" aria-labelledby="contact-t">
+    <div class="contact">
+      <div>
+        <h2 id="contact-t" data-i18n="c.t">Let's build something that ships.</h2>
+        <p data-i18n="c.p">Open to senior engineering roles and to building complete products for companies. I answer every message.</p>
+        <a class="mail" href="mailto:guerravargasirving@gmail.com">guerravargasirving@gmail.com</a>
+      </div>
+      <ul>
+        <li><a href="https://www.linkedin.com/in/irvingguerra" target="_blank" rel="noopener"><svg class="i"><use href="#i-in"/></svg>LinkedIn<span class="meta">/in/irvingguerra</span></a></li>
+        <li><a href="https://github.com/IrvingGuerra" target="_blank" rel="noopener"><svg class="i"><use href="#i-gh"/></svg>GitHub<span class="meta">IrvingGuerra</span></a></li>
+        <li><a href="cv.pdf" download data-cv><svg class="i"><use href="#i-down"/></svg><span data-i18n="c.cv">Download CV</span><span class="meta">PDF</span></a></li>
+      </ul>
+    </div>
+  </section>
 </main>
+
+<footer class="wrap">
+  <span>© 2026 Irving Guerra</span>
+  <nav aria-label="Privacy policies">
+    <span data-i18n="ft.p">Privacy:</span>
+    <a href="https://litedash.dev/privacidad/">LiteDash</a>
+    <a href="duoarena/privacidad.html">Duo Arena</a>
+    <a href="derrapazo/privacidad.html">Derrapazo</a>
+    <a href="getmycurrency/privacidad.html">Get My Currency</a>
+  </nav>
+</footer>
+
+<script>
+(() => {
+  const ES = {
+    "nav.work": "Trabajo", "nav.ai": "IA", "nav.products": "Productos", "nav.experience": "Experiencia", "nav.contact": "Contacto",
+    "hero.h1": "Diseño y lanzo apps en producción, de punta a punta, con IA en el proceso.",
+    "hero.sub": "<b>Ingeniero de software, 8+ años.</b> Móvil, web, backend, escritorio e IoT. Lidero la app de FTN en HealthyVita y soy el único ingeniero detrás de plataformas en vivo para empresas en México, construidas con agentes de IA como parte de mi forma de trabajar.",
+    "hero.contact": "Contáctame", "hero.cv": "Descargar CV",
+    "shelf.t": "En vivo ahora mismo", "shelf.p": "En App Store, Google Play y la web",
+    "shelf.kab": "Cadena de belleza", "shelf.kri": "Cadena de restaurantes", "shelf.own": "Producto propio", "shelf.own2": "Juego propio", "shelf.own2b": "Juego propio",
+    "work.t": "Plataformas en producción",
+    "work.p": "No son proyectos de práctica: negocios reales operan con ellas todos los días. Detrás de cada ícono está el sistema completo que construí.",
+    "f.role": "Rol", "f.platforms": "Plataformas", "f.stack": "Stack principal", "f.commits": "Mis commits", "sys": "Lo que hay detrás",
+    "ftn.by": "Ingeniero de software (empleado) · 2024 – hoy",
+    "ftn.desc": "Plataforma fitness por suscripción con tres pilares: entrenamiento, nutrición y bienestar mental, más comunidad, retos, gamificación y datos de wearables.",
+    "ftn.role": "<b>Líder de la app móvil</b> (1,599 de sus 1,753 commits) y full-stack en la API de Django, el backoffice y la web en Angular, en un equipo de unas quince personas.",
+    "ftn.f1": "Líder móvil · Full-stack", "ftn.s1": "App iOS y Android", "ftn.s3": "Backoffice y web", "ftn.s4": "Nube", "ftn.s5": "Compras in-app y 4 canales de pago",
+    "nun.by": "Único ingeniero · 2020 – hoy (con Antware, independiente desde 2024)",
+    "nun.desc": "Plataforma de alerta temprana y emergencias para México: recibe la alerta sísmica, emite alertas CAP por territorio, las retransmite por radio (SAME/EAS) y controla una flota en campo de sirenas IoT, estaciones meteorológicas y fluviómetros con umbrales automáticos.",
+    "nun.role": "<b>Todas las capas son mías</b>, desde el servidor en tiempo real hasta el firmware de los dispositivos, con un servidor dedicado por cliente.",
+    "nun.f1": "Único ingeniero", "nun.f2": "Móvil · Web · Escritorio · IoT",
+    "nun.s1": "App con alertas críticas a pantalla completa", "nun.s2": "Panel de control en tiempo real", "nun.s3": "3 apps de escritorio", "nun.s5": "Voces de alerta con TTS neuronal", "nun.s6": "Servidor dedicado por cliente",
+    "kab.by": "Kabandu · Freelance, ingeniero fundador · 2025 – hoy",
+    "kab.desc": "El sistema operativo de una cadena de cejas y belleza: punto de venta, agenda, check-in del personal, clientas, gift cards, puntos y membresías.",
+    "kab.role": "<b>Diseñado y construido desde cero, yo solo</b>, y sigue creciendo mes con mes junto al cliente.",
+    "kab.f1": "Ingeniero fundador", "kab.f2": "Escritorio · Móvil · Web",
+    "kab.s1": "Punto de venta y admin de escritorio", "kab.s2": "Lector de huella en el punto de venta", "kab.s2b": "Check-in del personal con geolocalización", "kab.s3": "App de clientas y app del personal", "kab.s4": "Servidor", "kab.s5": "Automatización por WhatsApp", "kab.s6": "Web: tickets y gift cards",
+    "kri.by": "Krispis Breakfast n' Dinner · Freelance · 2023 – hoy",
+    "kri.desc": "Plataforma completa para una cadena de restaurantes con varias sucursales: pedidos en línea con delivery, kiosco, pedidos por QR en mesa, pantalla de cocina, punto de venta, CRM e inventario.",
+    "kri.role": "<b>Único ingeniero desde 2023</b>, y sigue creciendo junto al cliente.",
+    "kri.f1": "Único ingeniero", "kri.f2": "Web · Kiosco · Cocina",
+    "kri.s1": "Web de pedidos", "kri.s2": "Admin, punto de venta y pantalla de cocina", "kri.s3": "Servidor", "kri.s6": "Acceso con código por WhatsApp",
+    "ai.t": "La IA es mi forma de trabajar, no una palabra de moda",
+    "ai.p": "Un solo ingeniero puede llevar una plataforma completa si el proceso es el correcto. El mío corre con agentes de IA con contexto claro, reglas y verificación.",
+    "ai.1t": "Desarrollo con agentes", "ai.1p": "Contexto del proyecto por capas, reglas por área, integraciones MCP y subagentes. Los planes viven junto al código y nada sale sin verificarse en producción.",
+    "ai.2t": "IA dentro de los productos", "ai.2p": "Las apps que construyo incluyen chatbots con IA, agentes de análisis de operaciones y voces de texto a voz neuronal para alertas de emergencia.",
+    "ai.3t": "Costo y calidad bajo control", "ai.3p": "Calculo el costo de un LLM por conversación, elijo el modelo adecuado para cada tarea y reviso cada cambio de un agente antes de que llegue a los usuarios.",
+    "ai.tree": "Cómo se organiza una plataforma para agentes de IA",
+    "ai.foot": "<b>~2,850 commits</b> coescritos con Claude entre FTN, Nuntius, Kabandu y Krispis.",
+    "own.t": "Mis productos", "own.p": "Diseñados, construidos y publicados por mí, de principio a fin.",
+    "own.ld": "Launcher de código abierto para pantallas Android de auto, con app compañera para el celular.",
+    "own.da": "Juego de peleas de plataformas en línea, de 2 a 6 jugadores, con modo historia.",
+    "own.dz": "Carreras de karts en 3D con salas en línea, hecho en Godot.",
+    "own.gmc": "Convertidor de divisas sencillo.",
+    "exp.t": "Experiencia",
+    "exp.hv": "· Ingeniero de software", "exp.hvp": "FTN: líder de la app en Flutter, más la API en Django y el backoffice y la web en Angular.",
+    "exp.md": "· Nuntius, único ingeniero", "exp.mdp": "Plataforma de alerta sísmica y de emergencias. Con Antware hasta 2024, independiente desde entonces.",
+    "exp.fl": "Freelance · Kabandu, Krispis", "exp.flp": "Plataformas completas para una cadena de belleza y una cadena de restaurantes.",
+    "exp.anp": "React Native, Meteor, Vue y React, tiempo real con WebSockets, Jest, Scrum. Sistemas embebidos de alerta sísmica con Raspberry Pi y radio EAS-SAME.",
+    "exp.cap": "App en React Native, APIs con Cloud Functions, notificaciones push y compras in-app con RevenueCat.",
+    "exp.ipp": "React y Firebase, PHP y MySQL, Java con Spring Boot y Hibernate, React Native.",
+    "exp.fr": "Freelance · 10+ proyectos", "exp.frp": "Bongless (grupo restaurantero), Relpers, Neurona Wireless (peticiones por voz con Dialogflow y Google Assistant), MyBike (App Store y Google Play).",
+    "edu.t": "Formación", "edu.1": "Ingeniería en Sistemas Computacionales", "edu.2": "Técnico en Sistemas Digitales",
+    "stack.t": "Stack con el que trabajo",
+    "c.t": "Construyamos algo que llegue a producción.",
+    "c.p": "Abierto a puestos senior de ingeniería y a construir productos completos para empresas. Contesto todos los mensajes.",
+    "c.cv": "Descargar CV", "ft.p": "Privacidad:"
+  };
+  const nodes = [...document.querySelectorAll("[data-i18n]")];
+  const EN = nodes.map(n => n.innerHTML);
+  const meta = {
+    en: { title: document.title, cv: "cv.pdf" },
+    es: { title: "Irving Guerra · Ingeniero de software con IA", cv: "cv-es.pdf" }
+  };
+  function apply(lang) {
+    nodes.forEach((n, i) => {
+      const k = n.dataset.i18n;
+      n.innerHTML = lang === "es" && ES[k] ? ES[k] : EN[i];
+    });
+    document.documentElement.lang = lang;
+    document.title = meta[lang].title;
+    document.querySelectorAll("[data-cv]").forEach(a => a.setAttribute("href", meta[lang].cv));
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+    try { localStorage.setItem("lang", lang); } catch (e) {}
+  }
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => {
+    apply(b.dataset.lang);
+    const u = new URL(location); u.searchParams.set("lang", b.dataset.lang); history.replaceState(null, "", u);
+  }));
+  let initial = new URLSearchParams(location.search).get("lang");
+  if (!initial) { try { initial = localStorage.getItem("lang"); } catch (e) {} }
+  if (!initial && /^es\b/i.test(navigator.language || "")) initial = "es";
+  if (initial === "es") apply("es");
+})();
+</script>
 </body>
 </html>
