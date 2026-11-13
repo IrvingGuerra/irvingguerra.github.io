@@ -95,7 +95,7 @@
   .shelf-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 16px; }
   .shelf-head h2 { font-size: 21px; letter-spacing: -.015em; }
   .shelf-head p { color: var(--ink-2); font-size: 14px; }
-  .shelf ol { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 14px; }
+  .shelf ol { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 14px; }
   .shelf li a { display: flex; flex-direction: column; gap: 8px; text-decoration: none; padding: 6px; margin: -6px; border-radius: 18px; transition: background-color .2s; }
   .shelf li a:hover { background: var(--bg-2); }
   .shelf img { width: 100%; max-width: 112px; aspect-ratio: 1; border-radius: var(--icon-r); box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 6px 16px -6px rgb(0 0 0 / .18); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; }
@@ -117,7 +117,7 @@
   /* Listings */
   .listing { display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 0 32px; padding: 40px 0; border-top: 1px solid var(--line); }
   .listing:last-child { border-bottom: 1px solid var(--line); }
-  .listing > img { width: 128px; aspect-ratio: 1; border-radius: var(--icon-r); box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 10px 24px -10px rgb(0 0 0 / .25); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; grid-row: span 2; }
+  .listing > img { width: 128px; height: auto; align-self: start; aspect-ratio: 1; border-radius: var(--icon-r); box-shadow: 0 1px 2px rgb(0 0 0 / .08), 0 10px 24px -10px rgb(0 0 0 / .25); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; grid-row: span 2; }
   .listing h3 { font-size: clamp(26px, 2.6vw, 32px); line-height: 1.1; }
   .listing .by { margin-top: 4px; color: var(--ink-2); font-size: 15.5px; }
   .listing .by a { color: var(--blue); text-decoration: none; }
@@ -293,9 +293,10 @@
       <li style="--k:1"><a href="#nuntius"><img src="img/apps/nuntius.webp" alt="" width="112" height="112"><span class="n">Nuntius</span><span class="c">MDreieck</span><span class="live">iOS · Android</span></a></li>
       <li style="--k:2"><a href="#kabandu"><img src="img/apps/kabandu.webp" alt="" width="112" height="112"><span class="n">Kabandu</span><span class="c" data-i18n="shelf.kab">Beauty salon chain</span><span class="live">iOS · Android</span></a></li>
       <li style="--k:3"><a href="#krispis"><img src="img/apps/krispis.webp" alt="" width="112" height="112"><span class="n">Krispis</span><span class="c" data-i18n="shelf.kri">Restaurant chain</span><span class="live">Web</span></a></li>
-      <li style="--k:4"><a href="#products"><img src="img/apps/litedash.webp" alt="" width="112" height="112"><span class="n">LiteDash</span><span class="c" data-i18n="shelf.own">My product</span><span class="live">Android</span></a></li>
-      <li style="--k:5"><a href="#products"><img src="img/apps/duoarena.webp" alt="" width="112" height="112"><span class="n">Duo Arena</span><span class="c" data-i18n="shelf.own2">My game</span><span class="live">Android · Web</span></a></li>
-      <li style="--k:6"><a href="#products"><img src="img/apps/derrapazo.webp" alt="" width="112" height="112"><span class="n">Derrapazo</span><span class="c" data-i18n="shelf.own2b">My game</span><span class="live">Android · Web</span></a></li>
+      <li style="--k:4"><a href="#diccu"><img src="img/apps/diccu.webp" alt="" width="112" height="112"><span class="n">Diccu</span><span class="c" data-i18n="shelf.dic">Home &amp; construction</span><span class="live">iOS · Android</span></a></li>
+      <li style="--k:5"><a href="#products"><img src="img/apps/litedash.webp" alt="" width="112" height="112"><span class="n">LiteDash</span><span class="c" data-i18n="shelf.own">My product</span><span class="live">Android</span></a></li>
+      <li style="--k:6"><a href="#products"><img src="img/apps/duoarena.webp" alt="" width="112" height="112"><span class="n">Duo Arena</span><span class="c" data-i18n="shelf.own2">My game</span><span class="live">Android · Web</span></a></li>
+      <li style="--k:7"><a href="#products"><img src="img/apps/derrapazo.webp" alt="" width="112" height="112"><span class="n">Derrapazo</span><span class="c" data-i18n="shelf.own2b">My game</span><span class="live">Android · Web</span></a></li>
     </ol>
   </section>
 
@@ -430,6 +431,37 @@
         </ul>
       </div>
     </article>
+
+    <article class="listing" id="diccu">
+      <img src="img/apps/diccu.webp" alt="Diccu app icon" width="128" height="128" loading="lazy">
+      <div>
+        <h3>Diccu</h3>
+        <p class="by"><span data-i18n="dic.by">Diccu · Freelance · 2022 – present</span></p>
+        <p class="desc" data-i18n="dic.desc">Marketplace for home and construction: people buy materials from local hardware stores and hire professionals, with maps, in-app chat, promotions and reviews.</p>
+        <p class="role" data-i18n="dic.role"><b>Built the app, admin and server</b> for the client, and kept it growing since 2022.</p>
+        <div class="links">
+          <a class="pill quiet sm" href="https://apps.apple.com/mx/app/diccu/id6547871112" target="_blank" rel="noopener">App Store <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://play.google.com/store/apps/details?id=com.diccu.app" target="_blank" rel="noopener">Google Play <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <dl class="facts">
+          <div><dt data-i18n="f.role">Role</dt><dd data-i18n="dic.f1">Full-stack engineer</dd></div>
+          <div><dt data-i18n="f.platforms">Platforms</dt><dd data-i18n="dic.f2">iOS · Android · Web</dd></div>
+          <div><dt data-i18n="f.stack">Core stack</dt><dd>Flutter · React · Fastify</dd></div>
+          <div><dt data-i18n="f.since">Since</dt><dd class="num">2022</dd></div>
+        </dl>
+      </div>
+      <div class="system">
+        <h4 data-i18n="sys">What's behind it</h4>
+        <ul>
+          <li><svg class="i"><use href="#i-phone"/></svg><span data-i18n="dic.s1">iOS &amp; Android app</span> <small>Flutter · Shorebird</small></li>
+          <li><svg class="i"><use href="#i-chat"/></svg><span data-i18n="dic.s2">Customer–business chat</span></li>
+          <li><svg class="i"><use href="#i-web"/></svg><span data-i18n="dic.s3">Maps &amp; nearby stores</span> <small>Google Maps</small></li>
+          <li><svg class="i"><use href="#i-desktop"/></svg><span data-i18n="dic.s4">Admin panel</span> <small>React · MUI</small></li>
+          <li><svg class="i"><use href="#i-server"/></svg><span data-i18n="dic.s5">Server</span> <small>Fastify · TypeScript · Fly.io</small></li>
+          <li><svg class="i"><use href="#i-cloud"/></svg><span>Firebase</span> <small>Auth · Firestore · FCM</small></li>
+        </ul>
+      </div>
+    </article>
   </section>
 
   <section class="block wrap" id="ai" aria-labelledby="ai-t">
@@ -486,7 +518,7 @@
       <ol class="tl">
         <li><span class="yr num">2024 – now</span><div><h3>HealthyVita <span data-i18n="exp.hv">· Software Engineer</span></h3><p data-i18n="exp.hvp">FTN: lead of the Flutter app, plus Django API and Angular backoffice and web.</p></div></li>
         <li><span class="yr num">2020 – now</span><div><h3>MDreieck <span data-i18n="exp.md">· Nuntius, lead engineer</span></h3><p data-i18n="exp.mdp">Seismic and emergency alert platform. Through Antware until 2024, independent since.</p></div></li>
-        <li><span class="yr num">2023 – now</span><div><h3 data-i18n="exp.fl">Freelance · Kabandu, Krispis</h3><p data-i18n="exp.flp">End-to-end platforms for a beauty salon chain and a restaurant chain.</p></div></li>
+        <li><span class="yr num">2022 – now</span><div><h3 data-i18n="exp.fl">Freelance · Kabandu, Krispis, Diccu</h3><p data-i18n="exp.flp">End-to-end platforms for a beauty salon chain, a restaurant chain and a home and construction marketplace.</p></div></li>
         <li><span class="yr num">2020 – 2024</span><div><h3>Antware <span>· Software Engineer</span></h3><p data-i18n="exp.anp">React Native, Meteor, Vue and React, real-time WebSockets, Jest, Scrum. Embedded seismic-alert systems with Raspberry Pi and EAS-SAME radio.</p></div></li>
         <li><span class="yr num">2021 – 2022</span><div><h3>Carklin <span>· Full-stack Developer</span></h3><p data-i18n="exp.cap">React Native app, Cloud Functions APIs, push notifications and in-app purchases with RevenueCat.</p></div></li>
         <li><span class="yr num">2019 – 2020</span><div><h3>IPN <span>· Full-stack Developer</span></h3><p data-i18n="exp.ipp">React and Firebase, PHP and MySQL, Java with Spring Boot and Hibernate, React Native.</p></div></li>
@@ -545,7 +577,7 @@
     "hero.sub": "<b>Ingeniero de software, 8+ años.</b> Móvil, web, backend, escritorio e IoT. Lidero la app de FTN en HealthyVita y construyo plataformas en vivo para empresas en México, con agentes de IA como parte de mi forma de trabajar.",
     "hero.contact": "Contáctame", "hero.cv": "Descargar CV",
     "shelf.t": "En vivo ahora mismo", "shelf.p": "En App Store, Google Play y la web",
-    "shelf.kab": "Cadena de belleza", "shelf.kri": "Cadena de restaurantes", "shelf.own": "Producto propio", "shelf.own2": "Juego propio", "shelf.own2b": "Juego propio",
+    "shelf.kab": "Cadena de belleza", "shelf.dic": "Hogar y construcción", "shelf.kri": "Cadena de restaurantes", "shelf.own": "Producto propio", "shelf.own2": "Juego propio", "shelf.own2b": "Juego propio",
     "work.t": "Plataformas en producción",
     "work.p": "No son proyectos de práctica: negocios reales operan con ellas todos los días. Detrás de cada ícono está el sistema completo que construí.",
     "f.role": "Rol", "f.platforms": "Plataformas", "f.stack": "Stack principal", "f.commits": "Mis commits", "sys": "Lo que hay detrás",
@@ -568,6 +600,11 @@
     "kri.role": "<b>Lo construyo desde 2023</b>, y sigue creciendo junto al cliente.",
     "kri.f1": "Ingeniero full-stack", "kri.f2": "Web · Kiosco · Cocina",
     "kri.s1": "Web de pedidos", "kri.s2": "Admin, punto de venta y pantalla de cocina", "kri.s3": "Servidor", "kri.s6": "Acceso con código por WhatsApp",
+    "dic.by": "Diccu · Freelance · 2022 – hoy",
+    "dic.desc": "Marketplace de hogar y construcción: la gente compra materiales en ferreterías locales y contrata profesionales, con mapas, chat en la app, promociones y reseñas.",
+    "dic.role": "<b>Construí la app, el admin y el servidor</b> para el cliente, y lo sigo haciendo crecer desde 2022.",
+    "dic.f1": "Ingeniero full-stack", "dic.f2": "iOS · Android · Web", "f.since": "Desde",
+    "dic.s1": "App iOS y Android", "dic.s2": "Chat entre clientes y negocios", "dic.s3": "Mapas y tiendas cercanas", "dic.s4": "Panel de admin", "dic.s5": "Servidor",
     "ai.t": "La IA es mi forma de trabajar, no una palabra de moda",
     "ai.p": "Un solo ingeniero puede llevar una plataforma completa si el proceso es el correcto. El mío corre con agentes de IA con contexto claro, reglas y verificación.",
     "ai.1t": "Desarrollo con agentes", "ai.1p": "Contexto del proyecto por capas, reglas por área, integraciones MCP y subagentes. Los planes viven junto al código y nada sale sin verificarse en producción.",
@@ -584,7 +621,7 @@
     "exp.t": "Experiencia",
     "exp.hv": "· Ingeniero de software", "exp.hvp": "FTN: líder de la app en Flutter, más la API en Django y el backoffice y la web en Angular.",
     "exp.md": "· Nuntius, ingeniero líder", "exp.mdp": "Plataforma de alerta sísmica y de emergencias. Con Antware hasta 2024, independiente desde entonces.",
-    "exp.fl": "Freelance · Kabandu, Krispis", "exp.flp": "Plataformas completas para una cadena de belleza y una cadena de restaurantes.",
+    "exp.fl": "Freelance · Kabandu, Krispis, Diccu", "exp.flp": "Plataformas completas para una cadena de belleza, una cadena de restaurantes y un marketplace de hogar y construcción.",
     "exp.anp": "React Native, Meteor, Vue y React, tiempo real con WebSockets, Jest, Scrum. Sistemas embebidos de alerta sísmica con Raspberry Pi y radio EAS-SAME.",
     "exp.cap": "App en React Native, APIs con Cloud Functions, notificaciones push y compras in-app con RevenueCat.",
     "exp.ipp": "React y Firebase, PHP y MySQL, Java con Spring Boot y Hibernate, React Native.",
