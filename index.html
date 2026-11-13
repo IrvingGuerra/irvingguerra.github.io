@@ -155,8 +155,11 @@
   .tree .foot b { color: #fff; font-weight: 600; }
 
   /* Own products */
-  .own { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .sub-h { font-size: 15px; font-weight: 600; color: var(--ink-2); letter-spacing: 0; margin: 0 0 10px; }
+  .own + .sub-h { margin-top: 36px; }
+  .own { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .own li { display: grid; grid-template-columns: 64px 1fr; gap: 14px; padding: 22px 20px 22px 0; align-content: start; }
+  .own.cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .own li + li { padding-left: 20px; border-left: 1px solid var(--line); }
   .own img { width: 64px; aspect-ratio: 1; border-radius: var(--icon-r); outline: 1px solid rgb(0 0 0 / .06); outline-offset: -1px; }
   .own h3 { font-size: 17px; letter-spacing: -.01em; }
@@ -203,9 +206,8 @@
     .bar nav { display: none; }
     .shelf ol { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 20px; }
     .ai, .cv, .contact { grid-template-columns: 1fr; }
-    .own { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .own li:nth-child(3) { padding-left: 0; border-left: 0; }
-    .own li:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .own.cols-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .own.cols-3 li:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
     .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .facts > div:nth-child(3) { padding-left: 0; border-left: 0; }
     .facts > div:nth-child(n+3) { margin-top: 12px; border-top: 1px solid var(--line); }
@@ -220,7 +222,7 @@
     .listing { grid-template-columns: 72px minmax(0, 1fr); gap: 0 16px; padding: 32px 0; }
     .listing > img { width: 72px; grid-row: auto; }
     .listing .desc, .listing .role, .links, .facts, .system { grid-column: 1 / -1; }
-    .own { grid-template-columns: 1fr; }
+    .own, .own.cols-2, .own.cols-3 { grid-template-columns: 1fr; }
     .own li, .own li + li { padding: 18px 0; border-left: 0; }
     .own li + li { border-top: 1px solid var(--line); }
     .tl li { grid-template-columns: 1fr; gap: 4px; }
@@ -345,7 +347,7 @@
         <div class="links">
           <a class="pill quiet sm" href="https://apps.apple.com/mx/app/nuntius-md/id6810503759" target="_blank" rel="noopener">App Store <svg class="i"><use href="#i-arrow"/></svg></a>
           <a class="pill quiet sm" href="https://play.google.com/store/apps/details?id=com.mdreieck.nuntius" target="_blank" rel="noopener">Google Play <svg class="i"><use href="#i-arrow"/></svg></a>
-          <a class="pill quiet sm" href="https://mdreieck.github.io/nuntius-web/" target="_blank" rel="noopener">Website <svg class="i"><use href="#i-arrow"/></svg></a>
+          <a class="pill quiet sm" href="https://mdreieck.github.io/nuntius-web/" target="_blank" rel="noopener"><span data-i18n="w.site">Website</span> <svg class="i"><use href="#i-arrow"/></svg></a>
         </div>
         <dl class="facts">
           <div><dt data-i18n="f.role">Role</dt><dd data-i18n="nun.f1">Lead engineer</dd></div>
@@ -463,8 +465,13 @@
       <h2 id="own-t" data-i18n="own.t">My own products</h2>
       <p data-i18n="own.p">Designed, built and published by me, start to finish.</p>
     </div>
-    <ul class="own">
+    <h3 class="sub-h" data-i18n="own.os">Open source</h3>
+    <ul class="own cols-2">
       <li><img src="img/apps/litedash.webp" alt="" width="64" height="64" loading="lazy"><div><h3>LiteDash</h3><p data-i18n="own.ld">Open-source Android launcher for car head units, with a phone companion app.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.litedash" target="_blank" rel="noopener">Google Play</a><a href="https://litedash.dev" target="_blank" rel="noopener">litedash.dev</a><a href="https://github.com/IrvingGuerra/litedash" target="_blank" rel="noopener">GitHub</a></div></div></li>
+      <li><img src="img/apps/lglow.webp" alt="" width="64" height="64" loading="lazy"><div><h3>LGlow</h3><p data-i18n="own.lg">Clean, fast, ad-free home screen for rooted LG TVs (webOS), with installer and guides in English and Spanish.</p><div class="links"><a href="https://irvingguerra.github.io/lglow/" target="_blank" rel="noopener" data-i18n="w.site">Website</a><a href="https://github.com/IrvingGuerra/lglow" target="_blank" rel="noopener">GitHub</a></div></div></li>
+    </ul>
+    <h3 class="sub-h" data-i18n="own.apps">Games and apps</h3>
+    <ul class="own cols-3">
       <li><img src="img/apps/duoarena.webp" alt="" width="64" height="64" loading="lazy"><div><h3>Duo Arena</h3><p data-i18n="own.da">Online platform fighter for 2 to 6 players, with story mode.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.duoarena" target="_blank" rel="noopener">Google Play</a><a href="https://duoarena.com.mx" target="_blank" rel="noopener">duoarena.com.mx</a></div></div></li>
       <li><img src="img/apps/derrapazo.webp" alt="" width="64" height="64" loading="lazy"><div><h3>Derrapazo</h3><p data-i18n="own.dz">3D kart racer with online rooms, built in Godot.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.derrapazo" target="_blank" rel="noopener">Google Play</a><a href="https://derrapazo.web.app" target="_blank" rel="noopener">Web</a></div></div></li>
       <li><img src="img/apps/getmycurrency.webp" alt="" width="64" height="64" loading="lazy"><div><h3>Get My Currency</h3><p data-i18n="own.gmc">Simple currency converter.</p><div class="links"><a href="https://play.google.com/store/apps/details?id=com.irvingguerra.getmycurrency" target="_blank" rel="noopener">Google Play</a></div></div></li>
@@ -569,6 +576,7 @@
     "ai.tree": "Cómo se organiza una plataforma para agentes de IA",
     "ai.foot": "<b>~2,850 commits</b> coescritos con Claude entre FTN, Nuntius, Kabandu y Krispis.",
     "own.t": "Mis productos", "own.p": "Diseñados, construidos y publicados por mí, de principio a fin.",
+    "w.site": "Sitio web", "own.os": "Código abierto", "own.apps": "Juegos y apps", "own.lg": "Home limpio, rápido y sin publicidad para TVs LG rooteadas (webOS), con instalador y guías en inglés y español.",
     "own.ld": "Launcher de código abierto para pantallas Android de auto, con app compañera para el celular.",
     "own.da": "Juego de peleas de plataformas en línea, de 2 a 6 jugadores, con modo historia.",
     "own.dz": "Carreras de karts en 3D con salas en línea, hecho en Godot.",
